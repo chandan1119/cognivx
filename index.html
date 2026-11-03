@@ -1,0 +1,1278 @@
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>APEX BRAIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--w:#fff;--k:#000;--g:#8d8d8d;--l:#2e2e2e;--p:#0c0c0c}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{background:var(--k);color:var(--w);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+body{background:radial-gradient(120% 50% at 50% 0,#1c1c1c,#000 70%) no-repeat;min-height:100dvh;max-width:480px;margin:0 auto}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
+.screen{display:none;padding:14px 14px calc(88px + env(safe-area-inset-bottom))}
+.screen.on{display:block;animation:in .18s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.screen.on{animation:none}}
+.bebas,h1,h2,.logo,.big{font-family:'Bebas Neue',Impact,sans-serif;font-weight:400;letter-spacing:.04em}
+small,.lbl{font-size:11px;color:var(--g);letter-spacing:.06em}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.logo{font-size:30px;line-height:1}
+.logo span{border:1px solid var(--w);padding:0 6px;margin-left:6px;font-size:22px;vertical-align:3px}
+.chip{border:1px solid var(--w);padding:6px 10px;font-size:12px;font-weight:600}
+.hud{position:relative;border:1px solid var(--l);background:rgba(255,255,255,.04);padding:14px;margin-bottom:12px}
+.hud::before{content:"";position:absolute;inset:-1px;pointer-events:none;background:
+linear-gradient(var(--w),var(--w)) 0 0/10px 2px,linear-gradient(var(--w),var(--w)) 0 0/2px 10px,
+linear-gradient(var(--w),var(--w)) 100% 0/10px 2px,linear-gradient(var(--w),var(--w)) 100% 0/2px 10px,
+linear-gradient(var(--w),var(--w)) 0 100%/10px 2px,linear-gradient(var(--w),var(--w)) 0 100%/2px 10px,
+linear-gradient(var(--w),var(--w)) 100% 100%/10px 2px,linear-gradient(var(--w),var(--w)) 100% 100%/2px 10px;background-repeat:no-repeat}
+.banner{display:flex;align-items:center;gap:14px;background:var(--w);color:var(--k);padding:10px 14px;margin:0 -14px 12px;min-height:76px}
+.banner svg{width:44px;height:50px;flex:none}
+.banner h1{font-size:46px;line-height:1}
+.banner small{color:#555}
+.banner .go{margin-left:auto;background:var(--k);color:var(--w);padding:12px 18px;font-weight:800;font-size:13px}
+.row{display:flex;align-items:center;gap:12px}
+.av{width:56px;height:56px;border:2px solid var(--w);display:grid;place-items:center;font-size:30px;flex:none}
+.grow{flex:1;min-width:0}
+.name{font-weight:800;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar{height:8px;border:1px solid var(--w);margin-top:8px}
+.bar i{display:block;height:100%;background:var(--w);width:0}
+.btn{display:block;width:100%;padding:15px;border:1px solid var(--w);font-weight:800;font-size:14px;text-align:center;margin-bottom:10px}
+.btn.solid{background:var(--w);color:var(--k)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.tile{border:1px solid var(--w);padding:14px 12px;text-align:left;min-height:84px;display:flex;flex-direction:column;justify-content:space-between;background:var(--p)}
+.tile b{font-family:'Bebas Neue',Impact,sans-serif;font-weight:400;font-size:24px;letter-spacing:.04em}
+.tile:last-child:nth-child(odd){grid-column:span 2}
+.tag{display:inline-block;border:1px solid var(--g);color:var(--g);font-size:10px;font-weight:600;padding:2px 6px;letter-spacing:.05em}
+.tag.live{background:var(--w);color:var(--k);border-color:var(--w)}
+h2{font-size:22px;margin:16px 0 8px}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cats button,.chips button{border:1px solid var(--w);padding:11px 4px;font-size:12px;font-weight:600}
+.chips{display:flex;gap:8px;margin:10px 0}
+.chips button{flex:1;padding:13px 4px}
+.chips button.on,.cats button.on{background:var(--w);color:var(--k)}
+.item{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:14px;border:1px solid var(--l);margin-bottom:8px;background:var(--p)}
+.item.live{border-color:var(--w)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--l);border:1px solid var(--l)}
+.stats div{background:var(--k);padding:12px}
+.stats b{display:block;font-family:'Bebas Neue',Impact,sans-serif;font-weight:400;font-size:30px;letter-spacing:.04em}
+#nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;background:#000;border-top:1px solid var(--w);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+#nav button{flex:1;padding:16px 0;font-size:11px;font-weight:600;color:var(--g);border-top:3px solid transparent;margin-top:-1px}
+#nav button.on{color:var(--w);border-top-color:var(--w)}
+body.playing #nav{display:none}
+.gt{display:flex;gap:8px;align-items:stretch;margin-bottom:12px}
+.gt .sq{width:48px;border:1px solid var(--w);font-size:18px}
+.gt .ttl{flex:1;border:1px solid var(--l);display:flex;align-items:center;padding:0 12px;font-size:26px}
+.gt .box{border:1px solid var(--w);padding:6px 12px;text-align:center;min-width:64px}
+.gt .box b{display:block;font-size:24px;font-family:'Bebas Neue',Impact,sans-serif;font-weight:400}
+.tb{height:6px;border:1px solid var(--w);margin-bottom:14px}.tb i{display:block;height:100%;background:var(--w);width:100%;transition:width 1s linear}
+.q{text-align:center;padding:24px 8px;font-size:68px;line-height:1;border:1px solid var(--l);margin-bottom:10px}
+.q.ok{animation:ok .25s}.q.bad{animation:bad .25s}
+@keyframes ok{0%{background:#fff;color:#000}100%{background:none}}
+@keyframes bad{0%,60%{border-color:#fff;transform:translateX(-5px)}30%{transform:translateX(5px)}100%{transform:none}}
+.ans{text-align:center;font-size:44px;height:60px;border-bottom:2px solid var(--w);margin-bottom:14px;font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.1em}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pad button{border:1px solid var(--w);padding:16px 0;font-size:24px;font-weight:600}
+.pad button:active,.num button:active{background:var(--w);color:var(--k)}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);width:100%;aspect-ratio:1;border:2px solid var(--w);margin-bottom:14px}
+.c{display:flex;align-items:center;justify-content:center;border:1px solid #3a3a3a;font-size:clamp(20px,7vw,32px);font-weight:600;color:var(--g)}
+.c.fx{color:var(--w);font-weight:800;background:rgba(255,255,255,.08)}
+.c.cr{border-right:2px solid var(--w)}.c.rb{border-bottom:2px solid var(--w)}
+.c.sl{background:var(--w);color:var(--k)}
+.c.bd{color:var(--k);background:#bbb;text-decoration:underline}
+.num{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px}
+.num button{border:1px solid var(--w);padding:15px 0;font-size:22px;font-weight:600}
+.reward{text-align:center;font-family:'Bebas Neue',Impact,sans-serif;font-size:28px;letter-spacing:.04em;margin:6px 0 16px}
+.note{color:var(--g);font-size:12px;line-height:1.5;margin:10px 0}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--w);color:var(--k);padding:10px 16px;font-size:13px;font-weight:600;z-index:9;display:none;max-width:90%}
+ul.pl{list-style:none}ul.pl li{padding:9px 0;border-bottom:1px solid var(--l);font-size:14px}
+.mg{display:grid;gap:8px;width:100%;aspect-ratio:1;margin-bottom:12px}
+.mc{border:1px solid var(--w);font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;background:var(--p)}
+.mc.on{background:var(--w);color:var(--k)}
+.rb{display:block;width:100%;height:320px;border:2px solid var(--w);font-family:'Bebas Neue',Impact,sans-serif;font-size:48px;letter-spacing:.05em;margin-bottom:12px}
+.rb.go{background:var(--w);color:var(--k)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{border:1px solid var(--w);padding:16px 8px;font-size:24px;font-weight:600;background:var(--p)}
+.opt:active{background:var(--w);color:var(--k)}
+.mini{display:grid;gap:3px;width:100%;max-width:110px;margin:8px auto 0}
+.mini i{display:block;aspect-ratio:1;border:1px solid #555}.mini i.f{background:var(--w)}
+#mq.ok{animation:ok .25s}#mq.bad{animation:bad .25s}
+.inp{width:100%;background:#000;border:1px solid var(--w);color:var(--w);font-family:'Bebas Neue',Impact,sans-serif;font-size:34px;letter-spacing:.3em;text-align:center;padding:12px;margin:8px 0 10px;text-transform:uppercase;user-select:text;-webkit-user-select:text;border-radius:0;outline:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 14px}
+.g2 button{border:1px solid var(--w);padding:12px 6px;font-size:12px;font-weight:600}
+.g2 button.on{background:var(--w);color:var(--k)}
+.sel{width:100%;background:#000;color:var(--w);border:1px solid var(--w);padding:14px 10px;font:inherit;font-weight:600;border-radius:0;margin:6px 0 12px;-webkit-appearance:none;appearance:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><symbol id="emb" viewBox="0 0 24 25"><path d="M12 1L22 4V12C22 18 17 22 12 24C7 22 2 18 2 12V4Z" fill="#000"/><path d="M13.5 5L7 13.5H11L10 20L17 10.5H13Z" fill="#fff"/></symbol></svg>
+<main>
+<section class="screen" id="s-home"></section><section class="screen" id="s-library"></section>
+<section class="screen" id="s-intro"></section><section class="screen" id="s-play"></section>
+<section class="screen" id="s-result"></section><section class="screen" id="s-rooms"></section><section class="screen" id="s-lobby"></section><section class="screen" id="s-match"></section><section class="screen" id="s-squad"></section>
+<section class="screen" id="s-squads"></section><section class="screen" id="s-friends"></section>
+<section class="screen" id="s-ranks"></section><section class="screen" id="s-player"></section><section class="screen" id="s-ach"></section><section class="screen" id="s-olobby"></section><section class="screen" id="s-setup"></section><section class="screen" id="s-profile"></section>
+</main>
+<nav id="nav"><button data-go="home">HOME</button><button data-go="library">GAMES</button><button data-go="rooms">ROOMS</button><button data-go="ranks">RANKS</button><button data-go="profile">PROFILE</button></nav>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== 1. STORAGE (local only; Phase 7 replaces this with a backend) ===== */
+const KEY='apex_v1';
+function defaults(){return {name:'Player',xp:0,streak:0,last:'',games:0,best:{},friends:[],reqs:[],sent:[],hist:[],h2h:{},wk:{id:0,xp:0},seeded:0,ach:{},newAch:0,plays:{},daily:'',dailyN:0,vib:1};}
+function loadState(){try{return Object.assign(defaults(),JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){return defaults();}}
+function saveState(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}syncSoon();}
+const S=loadState();
+function dayStr(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function updateStreak(){
+  const t=dayStr(new Date()),y=dayStr(new Date(Date.now()-864e5));
+  if(S.last!==t){S.streak=(S.last===y)?S.streak+1:1;S.last=t;saveState();}
+}
+const lvOf=x=>Math.floor(x/100)+1;
+const level=()=>lvOf(S.xp);
+const rankOf=lv=>lv<5?'Rookie':lv<10?'Challenger':'Elite';
+const rankName=()=>rankOf(level());
+
+/* ===== 2. HELPERS ===== */
+const $=s=>document.querySelector(s);
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const emb=()=>'<svg><use href="#emb"/></svg>';
+let TM=null,TOS=[];
+function stopTimer(){if(TM){clearInterval(TM);TM=null;}TOS.forEach(clearTimeout);TOS=[];}
+function later(fn,ms){TOS.push(setTimeout(fn,ms));}
+function startTimer(fn){stopTimer();TM=setInterval(fn,1000);}
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',1800);}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ===== 3. GAME LIBRARY DATA (live = working game, otherwise planned) ===== */
+const GAMES=[
+ ['Maths','blitz','Blitz',1],['Maths','mental','Mental calculations',1],['Maths','seq','Number sequences',1],
+ ['Memory','pmem','Pattern memory',1],['Memory','nmem','Number memory',1],['Memory','posm','Position memory',1],['Memory','srec','Sequence recall',1],
+ ['Puzzle','sudoku','Sudoku 6×6',1],['Puzzle','logic','Logic puzzles',1],['Puzzle','spatial','Spatial reasoning',1],
+ ['Reaction','react','Reaction speed',1],['Reaction','tgt','Target recognition',1]];
+const INFO={
+ blitz:{t:'BLITZ',d:'Solve as many sums as you can in 60 seconds. Type the answer and it submits by itself. Streaks add bonus points.'},
+ sudoku:{t:'SUDOKU 6×6',d:'Fill the grid so every row, column and 2×3 box holds 1 to 6 once. Fast, clean solves score higher.'},
+ mental:{t:'MENTAL MATHS',d:'Solve multi-step sums in 60 seconds. Remember: multiply before you add or subtract, and brackets come first.'},
+ seq:{t:'NUMBER SEQUENCES',d:'Find the pattern and type the next number. You have 60 seconds. Harder levels add multiplying and Fibonacci-style patterns.'},
+ nmem:{t:'NUMBER MEMORY',d:'Digits flash on screen. Memorise them, then type them in order. Each correct round adds one digit. You have 3 lives.'},
+ pmem:{t:'PATTERN MEMORY',d:'Tiles light up briefly. After they go dark, tap every tile that was lit. Each level lights more tiles. You have 3 lives.'},
+ posm:{t:'POSITION MEMORY',d:'Numbers appear on the grid, then vanish. Tap the squares in number order: 1, 2, 3 and so on. You have 3 lives.'},
+ srec:{t:'SEQUENCE RECALL',d:'Watch the tiles flash one at a time, then repeat the same order. Each level adds one more flash. You have 3 lives.'},
+ react:{t:'REACTION SPEED',d:'Wait for the box to turn white, then tap as fast as you can. Tapping early costs points. Faster average means a higher score.'},
+ tgt:{t:'TARGET RECOGNITION',d:'Find the matching shape in the grid and tap it. Hit as many as you can in 30 seconds. Wrong taps cost points.'},
+ logic:{t:'LOGIC PUZZLES',d:'Work out the answer from the clues: who is tallest, or which number does not belong. Answer as many as you can in 60 seconds.'},
+ spatial:{t:'SPATIAL REASONING',d:'Picture the shape turning in your head, then tap the option that shows it after the rotation. You have 60 seconds.'}};
+const DIFF=['Easy','Medium','Hard'];
+let libCat='All',G={game:'blitz',d:1},R={};
+
+/* ===== 4. NAVIGATION ===== */
+function show(n){
+  checkAch();CURN=n;if(n!=='play'&&n!=='match')MATCH=null;
+  stopTimer();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id==='s-'+n));
+  $('#s-'+n).innerHTML=V[n]();
+  document.body.classList.toggle('playing',n==='play');
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.go===(n==='lobby'||n==='match'||n==='olobby'?'rooms':n)));
+  window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-go],[data-act]');if(!el)return;
+  if(el.dataset.go)show(el.dataset.go);
+  else if(ACT[el.dataset.act])ACT[el.dataset.act](el.dataset.v);
+});
+
+/* ===== 5. VIEWS ===== */
+const V={
+ home(){
+  const into=S.xp%100;
+  return `<div class="top"><div class="logo">APEX<span>BRAIN</span></div><div class="chip">${S.streak}-DAY STREAK</div></div>
+  <div class="hud"><div class="row"><div class="av bebas">${esc(S.name[0]||'P').toUpperCase()}</div>
+   <div class="grow"><button class="name" data-act="rename">${esc(S.name)}</button>
+   <small>LEVEL ${level()} · ${rankName()} (local rank)</small>
+   <div class="bar"><i style="width:${into}%"></i></div><small>${into} / 100 XP</small></div></div></div>
+  <div class="banner">${emb()}<div><small>FEATURED GAME</small><h1>BLITZ</h1></div><button class="go" data-act="pick" data-v="blitz">PLAY</button></div>
+  <button class="btn solid" data-act="quick">QUICK PLAY</button>
+  ${dailyHtml()}
+  <div class="tiles">
+   <button class="tile" data-go="rooms"><b>MULTIPLAYER</b><span class="tag">SIMULATED</span></button>
+   <button class="tile" data-go="rooms"><b>PRIVATE ROOMS</b><span class="tag">SIMULATED</span></button>
+   <button class="tile" data-go="squads"><b>SQUADS</b><span class="tag">SIMULATED</span></button>
+   <button class="tile" data-go="friends"><b>FRIENDS</b>${S.reqs.length?`<span class="tag live">${S.reqs.length} REQUEST${S.reqs.length>1?'S':''}</span>`:'<span class="tag">SIMULATED</span>'}</button>
+   <button class="tile" data-go="ranks"><b>LEADERBOARDS</b><span class="tag">SIMULATED</span></button>
+   <button class="tile" data-go="ach"><b>ACHIEVEMENTS</b>${S.newAch?`<span class="tag live">${S.newAch} NEW</span>`:`<span class="tag">${ACH.filter(a=>S.ach[a[0]]).length} / ${ACH.length}</span>`}</button></div>
+  <h2>GAME CATEGORIES</h2>
+  <div class="cats">${['Maths','Memory','Puzzle','Reaction'].map(c=>`<button data-act="cat" data-v="${c}">${c}</button>`).join('')}</div>`;},
+ library(){
+  const cats=['All','Maths','Memory','Puzzle','Reaction'];
+  return `<div class="top"><div class="logo">GAME LIBRARY</div></div>
+  <div class="cats" style="grid-template-columns:repeat(5,1fr)">${cats.map(c=>`<button class="${c===libCat?'on':''}" data-act="cat" data-v="${c}">${c}</button>`).join('')}</div><div style="height:12px"></div>
+  ${GAMES.filter(g=>libCat==='All'||g[0]===libCat).map(g=>`<button class="item ${g[3]?'live':''}" data-act="${g[3]?'pick':'soon'}" data-v="${g[1]}">
+   <span><b>${g[2]}</b><br><small>${g[0]}${g[3]&&S.best[g[1]]?' · Best '+S.best[g[1]]:''}</small></span><span class="tag ${g[3]?'live':''}">${g[3]?'PLAYABLE':'PART 2B'}</span></button>`).join('')}`;},
+ intro(){
+  const i=INFO[G.game];
+  return `<div class="gt"><button class="sq" data-go="library">✕</button><div class="ttl bebas">${i.t}</div></div>
+  <div class="hud"><div class="lbl">HOW TO PLAY</div><p style="margin-top:8px;font-size:14px;line-height:1.5">${i.d}</p></div>
+  <div class="lbl">DIFFICULTY</div><div class="chips">${DIFF.map((d,n)=>`<button class="${n===G.d?'on':''}" data-act="diff" data-v="${n}">${d}</button>`).join('')}</div>
+  <div class="hud"><div class="lbl">PERSONAL BEST</div><div class="big" style="font-size:40px">${S.best[G.game]||'—'}</div><small>${S.plays[G.game]||0} PLAYS</small></div>
+  <button class="btn solid" data-act="start">START</button>`;},
+ play(){return ENG[G.game].view();},
+ result(){
+  return `<div class="banner">${emb()}<h1>${R.title}</h1></div>
+  <div class="reward">YOU GOT +${R.xp} XP THIS ROUND!</div>
+  <div class="stats">${R.stats.map(s=>`<div><small>${s[0]}</small><b>${s[1]}</b></div>`).join('')}</div>
+  <div class="hud" style="margin-top:12px"><div class="lbl">LEVEL ${level()} · ${S.xp%100} / 100 XP</div><div class="bar"><i style="width:${S.xp%100}%"></i></div></div>
+  <button class="btn solid" data-act="start">PLAY AGAIN</button><button class="btn" data-go="home">HOME</button>`;},
+ profile(){
+  const t=totals();
+  return `<div class="top"><div class="logo">PROFILE</div></div>
+  <div class="hud"><div class="row"><div class="av bebas">${esc(S.name[0]||'P').toUpperCase()}</div><div class="grow"><button class="name" data-act="rename">${esc(S.name)}</button><small>LEVEL ${level()} · ${rankName()} · tap name to change</small></div></div></div>
+  <div class="stats"><div><small>GLOBAL RANK</small><b>#${grank(S.xp,1)}</b></div><div><small>XP THIS WEEK</small><b>${myWeek()}</b></div>
+  <div><small>LEVEL</small><b>${level()}</b></div><div><small>TOTAL XP</small><b>${S.xp}</b></div>
+  <div><small>GAMES PLAYED</small><b>${S.games}</b></div><div><small>MATCH WINS (VS BOTS)</small><b>${t.w} / ${t.g}</b></div>
+  <div><small>WIN RATE</small><b>${wr(t.w,t.g)}</b></div><div><small>FRIENDS</small><b>${S.friends.length}</b></div>
+  ${GAMES.filter(g=>g[3]).map(g=>`<div><small>BEST ${g[2].toUpperCase()}</small><b>${S.best[g[1]]||'—'}</b></div>`).join('')}</div>
+  <div class="tiles" style="margin-top:12px"><button class="tile" data-go="friends"><b>FRIENDS</b><span class="tag">${S.reqs.length} REQUESTS</span></button><button class="tile" data-go="ranks" style="grid-column:auto"><b>LEADERBOARDS</b><span class="tag">GLOBAL · WEEKLY</span></button></div>
+  <button class="btn" data-go="ach">ACHIEVEMENTS (${ACH.filter(a=>S.ach[a[0]]).length} / ${ACH.length})${S.newAch?' · '+S.newAch+' NEW':''}</button>
+  <h2>MATCH HISTORY</h2>
+  <div class="hud">${S.hist.length?histRows(S.hist):'<p class="note" style="margin:0">No games yet. Play a game, room, squad match or challenge to start your history.</p>'}</div>
+  <p class="note">History keeps your last 30 games. Room, squad and challenge opponents are simulated. All data is stored only on this phone.</p>
+  <h2>SETTINGS</h2>
+  <div class="hud"><div class="row"><span class="grow lbl">ONLINE PLAY: ${ON.on?'CONNECTED · CODE '+ON.code:ON.state==='connecting'?'CONNECTING…':ON.state==='error'?'ERROR':'OFF'}</span><button class="chip" data-go="setup">SETUP</button></div></div>
+  <div class="hud"><div class="row"><span class="grow lbl">HAPTIC FEEDBACK (IF YOUR PHONE SUPPORTS IT)</span><button class="chip" data-act="vib">${S.vib===0?'OFF':'ON'}</button></div></div>
+  <button class="btn" data-act="reset">RESET ALL DATA</button>`;}
+};
+
+/* ===== 6. ACTIONS ===== */
+const ACT={
+ pick(g){G={game:g,d:G.d};show('intro');},
+ quick(){ACT.pick(Math.random()<.5?'blitz':'sudoku');},
+ diff(v){G.d=+v;show('intro');},
+ cat(c){libCat=c;show('library');},
+ soon(){toast('Coming in Part 2B');},
+ rename(){const n=prompt('Player name (max 14 characters)',S.name);if(n===null)return;
+  const t=n.trim().slice(0,14);if(!t){toast('Name cannot be empty');return;}S.name=t;saveState();show(document.querySelector('.screen.on').id.slice(2));},
+ start(){const e=ENG[G.game];e.init();show('play');if(e.tick)startTimer(e.tick);if(e.first)e.first();},
+ quit(){if(confirm('Quit this game? Progress will be lost.'))show('home');},
+ key(v){blitzKey(v);},cell(v){G.sel=+v;drawGrid();},num(v){sudokuPlace(+v);}};
+
+/* ===== 7. FINISH A GAME (shared by all games) ===== */
+function endGame(game,score,xp,title,stats){
+  stopTimer();
+  const nb=score>(S.best[game]||0);
+  if(nb)S.best[game]=score;
+  S.plays[game]=(S.plays[game]||0)+1;
+  if(!MATCH&&game===dailyGame()&&!dailyDone()){S.daily=dayStr(new Date());S.dailyN=(S.dailyN||0)+1;xp+=25;stats=stats.concat([['DAILY BONUS','+25 XP'],['DAILY DONE',S.dailyN+' TOTAL']]);}
+  S.games++;addXp(xp);if(!MATCH)addHist({k:'Solo',t:gname(game),r:'',s:score,x:nb?'New best':''});saveState();
+  R={title:nb?'NEW BEST':title,xp,stats:stats.concat([['SCORE',score],['BEST',S.best[game]]])};
+  MATCH?matchRound(score):show('result');
+}
+
+/* ===== 8. BLITZ ENGINE ===== */
+function blitzInit(){G.t=G.dur||60;G.score=0;G.ok=0;G.total=0;G.combo=0;G.maxCombo=0;G.input='';G.q=null;}
+function blitzView(){
+  return `<div class="gt"><button class="sq" data-act="quit">✕</button><div class="ttl bebas">${INFO[G.game].t}</div>
+  <div class="box"><small>TIME</small><b id="tm">${G.t}</b></div><div class="box"><small>SCORE</small><b id="sc">0</b></div></div>
+  <div class="tb"><i id="tbar"></i></div><div class="q bebas" id="q">--</div><div class="ans" id="ans">?</div>
+  <div class="pad">${[1,2,3,4,5,6,7,8,9,'C',0,'⌫'].map(k=>`<button data-act="key" data-v="${k}">${k}</button>`).join('')}</div>`;}
+function blitzNext(){
+  if(G.game!=='blitz'){G.q=G.game==='seq'?seqQ():mentalQ();G.input='';blitzDraw();return;}
+  const lv=Math.min(Math.floor(G.ok/4),5)+G.d*2,n=8+lv*6;
+  const op=shuffle(G.d===0?['+','−']:['+','−','×'])[0];
+  let a=rnd(2,n),b=rnd(2,n);
+  if(op==='×'){a=rnd(2,6+lv);b=rnd(2,6+Math.floor(lv/2));}
+  if(op==='−'&&b>a)[a,b]=[b,a];
+  G.q={a,b,op,ans:op==='+'?a+b:op==='−'?a-b:a*b};
+  G.input='';blitzDraw();
+}
+function blitzDraw(){$('#q').textContent=G.q.text||(G.q.a+' '+G.q.op+' '+G.q.b);$('#q').style.fontSize=G.q.text?'36px':'';$('#ans').textContent=G.input||'?';$('#sc').textContent=G.score;}
+function blitzKey(v){
+  if(!G.q)return;
+  if(v==='C')G.input='';
+  else if(v==='⌫')G.input=G.input.slice(0,-1);
+  else if(G.input.length<4)G.input+=v;
+  $('#ans').textContent=G.input||'?';
+  if(G.input.length===String(G.q.ans).length)blitzCheck();
+}
+function blitzCheck(){
+  const ok=+G.input===G.q.ans;G.total++;
+  if(ok){G.ok++;G.combo++;G.maxCombo=Math.max(G.maxCombo,G.combo);G.score+=10+Math.min(G.combo,10);}else G.combo=0;
+  const q=$('#q');q.classList.remove('ok','bad');void q.offsetWidth;q.classList.add(ok?'ok':'bad');buzz(ok?12:[40,30,40]);
+  blitzNext();
+}
+function blitzTick(){
+  G.t--;$('#tm').textContent=G.t;$('#tbar').style.width=(G.t/(G.dur||60)*100)+'%';
+  if(G.t<=0)endGame(G.game,G.score,Math.round(G.score/4)+5,'TIME UP',
+   [['CORRECT',G.ok+' / '+G.total],['ACCURACY',(G.total?Math.round(G.ok/G.total*100):0)+'%'],['BEST STREAK',G.maxCombo],['DIFFICULTY',DIFF[G.d]]]);
+}
+
+/* ===== 9. SUDOKU 6x6 ENGINE (2 rows x 3 columns per box) ===== */
+function sudokuInit(){
+  const perm=shuffle([1,2,3,4,5,6]);
+  const rows=shuffle([0,1,2]).flatMap(b=>shuffle([0,1]).map(x=>b*2+x));
+  const cols=shuffle([0,1]).flatMap(s=>shuffle([0,1,2]).map(x=>s*3+x));
+  const cells=[];
+  for(let r=0;r<6;r++)for(let c=0;c<6;c++)cells.push(perm[(3*(rows[r]%2)+Math.floor(rows[r]/2)+cols[c])%6]);
+  const blanks=[12,16,20][G.d];
+  G.fixed=cells.map(()=>true);
+  shuffle([...Array(36).keys()]).slice(0,blanks).forEach(i=>{cells[i]=0;G.fixed[i]=false;});
+  G.cells=cells;G.sel=-1;G.t=0;G.entries=0;G.err=0;
+}
+function sudokuConflicts(){
+  const bad=new Set(),c=G.cells,box=i=>Math.floor(i/12)*2+Math.floor((i%6)/3);
+  for(let i=0;i<36;i++){if(!c[i])continue;
+    for(let j=0;j<36;j++){if(i===j||c[j]!==c[i])continue;
+      if(Math.floor(i/6)===Math.floor(j/6)||i%6===j%6||box(i)===box(j)){bad.add(i);break;}}}
+  return bad;
+}
+function sudokuView(){
+  return `<div class="gt"><button class="sq" data-act="quit">✕</button><div class="ttl bebas">SUDOKU</div>
+  <div class="box"><small>TIME</small><b id="tm">0:00</b></div><div class="box"><small>ERRORS</small><b id="er">0</b></div></div>
+  <div class="grid" id="grid">${gridHtml()}</div>
+  <div class="num">${[1,2,3,4,5,6].map(n=>`<button data-act="num" data-v="${n}">${n}</button>`).join('')}</div>
+  <button class="btn" data-act="num" data-v="0">ERASE</button>`;}
+function gridHtml(){
+  const bad=sudokuConflicts();let h='';
+  for(let i=0;i<36;i++){const r=Math.floor(i/6),c=i%6;
+    h+=`<button class="c${G.fixed[i]?' fx':''}${G.sel===i?' sl':''}${bad.has(i)?' bd':''}${c===2?' cr':''}${r===1||r===3?' rb':''}" data-act="cell" data-v="${i}">${G.cells[i]||''}</button>`;}
+  return h;
+}
+function drawGrid(){$('#grid').innerHTML=gridHtml();$('#er').textContent=G.err;}
+function sudokuPlace(v){
+  if(G.sel<0||G.fixed[G.sel]){toast('Tap an empty square first');return;}
+  G.cells[G.sel]=v;
+  if(v){G.entries++;if(sudokuConflicts().has(G.sel))G.err++;}
+  drawGrid();
+  if(G.cells.every(x=>x)&&sudokuConflicts().size===0){
+    const score=Math.max(100,1000-G.t*3-G.err*25);
+    endGame('sudoku',score,40+(G.d*10),'SOLVED',
+     [['TIME',fmt(G.t)],['ERRORS',G.err],['ACCURACY',(G.entries?Math.round((G.entries-G.err)/G.entries*100):100)+'%'],['DIFFICULTY',DIFF[G.d]]]);
+  }
+}
+const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+function sudokuTick(){G.t++;$('#tm').textContent=fmt(G.t);}
+
+/* ===== 10. PHASE 2 GAMES ===== */
+function hudBar(a,ia,va,b,ib,vb){return `<div class="gt"><button class="sq" data-act="quit">✕</button><div class="ttl bebas">${INFO[G.game].t}</div>
+ <div class="box"><small>${a}</small><b id="${ia}">${va}</b></div><div class="box"><small>${b}</small><b id="${ib}">${vb}</b></div></div>`;}
+const endRun=(sc,stats)=>endGame(G.game,sc,Math.round(sc/3)+5,'GAME OVER',stats);
+
+/* Mental calculations + Number sequences reuse the Blitz engine */
+function mentalQ(){
+  const lv=Math.min(Math.floor(G.ok/4),5)+G.d*2,a=rnd(2,5+lv),b=rnd(2,5+lv),c=rnd(2,4+Math.floor(lv/2)),t=rnd(0,2);
+  if(t===0)return{text:a+' + '+b+' × '+c,ans:a+b*c};
+  if(t===1){const k=rnd(1,a*b-1);return{text:a+' × '+b+' − '+k,ans:a*b-k};}
+  return{text:'('+a+' + '+b+') × '+c,ans:(a+b)*c};
+}
+function seqQ(){
+  const lv=Math.min(Math.floor(G.ok/4),4),t=rnd(0,G.d),T=[];
+  if(t===0){const s0=rnd(1,20),d=rnd(2,5+lv);for(let i=0;i<5;i++)T.push(s0+d*i);}
+  else if(t===1){const s0=rnd(1,4),m=rnd(2,3);for(let i=0;i<5;i++)T.push(s0*Math.pow(m,i));}
+  else{T.push(rnd(1,5),rnd(1,6));for(let i=2;i<5;i++)T.push(T[i-1]+T[i-2]);}
+  return{text:T.slice(0,4).join('   ')+'   ?',ans:T[4]};
+}
+
+/* Number memory */
+function nmInit(){G.lv=3+G.d;G.lives=3;G.score=0;G.input='';G.ph='';}
+function nmView(){return hudBar('LEVEL','lv',G.lv,'LIVES','lf',3)+`<div class="q bebas" id="nm" style="letter-spacing:.12em;min-height:150px"></div><p class="note" id="st" style="text-align:center;min-height:18px"></p>
+ <div class="pad">${[1,2,3,4,5,6,7,8,9,'C',0,'⌫'].map(k=>`<button data-act="nk" data-v="${k}">${k}</button>`).join('')}</div>`;}
+function nmDraw(){$('#nm').textContent=G.input+'_'.repeat(G.lv-G.input.length);}
+function nmNext(){
+  G.seq=Array.from({length:G.lv},()=>rnd(0,9)).join('');G.input='';G.ph='show';
+  $('#lv').textContent=G.lv;$('#lf').textContent=G.lives;$('#st').textContent='Memorise the digits';$('#nm').textContent=G.seq;
+  later(()=>{G.ph='in';$('#st').textContent='Type what you saw';nmDraw();},1000+G.lv*500);
+}
+ACT.nk=v=>{
+  if(G.ph!=='in')return;
+  if(v==='C')G.input='';else if(v==='⌫')G.input=G.input.slice(0,-1);else if(G.input.length<G.lv)G.input+=v;
+  nmDraw();
+  if(G.input.length===G.lv){
+    G.ph='x';const ok=G.input===G.seq;
+    if(ok){G.score+=G.lv*10;G.lv++;}else G.lives--;
+    $('#nm').textContent=G.seq;$('#st').textContent=ok?'Correct':'Wrong';
+    later(()=>G.lives<=0?endRun(G.score,[['LEVEL REACHED',G.lv],['DIFFICULTY',DIFF[G.d]]]):nmNext(),900);
+  }
+};
+
+/* Grid memory: Pattern memory, Position memory, Sequence recall */
+function gmInit(){G.lv=1;G.lives=3;G.score=0;G.n=G.game==='posm'?4:G.game==='srec'?3:3+G.d;G.ph='';}
+function gmView(){return hudBar('LEVEL','lv',G.lv,'LIVES','lf',3)+`<p class="note" id="st" style="text-align:center;min-height:18px"></p><div class="mg" id="mg" style="grid-template-columns:repeat(${G.n},1fr)"></div>`;}
+function gmDraw(lit,lab){let h='';for(let i=0;i<G.n*G.n;i++)h+=`<button class="mc${lit.includes(i)?' on':''}" data-act="gm" data-v="${i}">${(lab&&lab[i])||''}</button>`;$('#mg').innerHTML=h;}
+function gmRound(){
+  const N=G.n*G.n,g=G.game;G.step=0;G.hit=new Set();G.ph='show';
+  $('#lv').textContent=G.lv;$('#lf').textContent=G.lives;
+  if(g==='srec'){
+    G.order=Array.from({length:G.lv+1},()=>rnd(0,N-1));$('#st').textContent='Watch the sequence';gmDraw([]);
+    G.order.forEach((x,k)=>{later(()=>gmDraw([x]),600+k*700);later(()=>gmDraw([]),1050+k*700);});
+    later(()=>{G.ph='in';$('#st').textContent='Repeat it in order';},600+G.order.length*700);return;
+  }
+  const cnt=Math.min(G.lv+2,Math.floor(N/2));
+  G.order=shuffle([...Array(N).keys()]).slice(0,cnt);
+  G.lab={};if(g==='posm')G.order.forEach((x,k)=>G.lab[x]=k+1);
+  gmDraw(g==='posm'?[]:G.order,G.lab);$('#st').textContent=g==='posm'?'Remember the numbers':'Remember the tiles';
+  later(()=>{G.ph='in';gmDraw([]);$('#st').textContent=g==='posm'?'Tap 1, 2, 3 in order':'Tap the tiles';},1000+cnt*400);
+}
+function gmWin(){G.ph='x';G.score+=G.lv*10;G.lv++;$('#st').textContent='Correct';later(gmRound,700);}
+function gmFail(){
+  G.ph='x';G.lives--;buzz([40,30,40]);$('#lf').textContent=G.lives;$('#st').textContent='Wrong';
+  if(G.game==='pmem')gmDraw(G.order);
+  later(()=>G.lives<=0?endRun(G.score,[['LEVEL REACHED',G.lv],['DIFFICULTY',DIFF[G.d]]]):gmRound(),900);
+}
+ACT.gm=v=>{
+  if(G.ph!=='in')return;const i=+v;
+  if(G.game==='pmem'){
+    if(!G.order.includes(i))return gmFail();
+    G.hit.add(i);gmDraw([...G.hit]);if(G.hit.size===G.order.length)gmWin();return;
+  }
+  if(i!==G.order[G.step])return gmFail();
+  G.step++;
+  if(G.game==='posm'){G.hit.add(i);const L={};G.hit.forEach(x=>L[x]=G.lab[x]);gmDraw([...G.hit],L);}
+  else{gmDraw([i]);later(()=>gmDraw([]),150);}
+  if(G.step===G.order.length)gmWin();
+};
+
+/* Reaction speed */
+function rxInit(){G.rounds=[5,7,10][G.d];G.times=[];G.early=0;G.ph='';}
+function rxView(){return hudBar('ROUND','rd',1,'EARLY','er',0)+`<button class="rb" id="rb" data-act="rx">GET READY</button><p class="note" style="text-align:center">Tap as soon as the box turns white.</p>`;}
+function rxNext(){
+  G.ph='wait';const b=$('#rb');b.classList.remove('go');b.textContent='WAIT…';$('#rd').textContent=G.times.length+1;
+  later(()=>{G.ph='go';G.st=performance.now();b.classList.add('go');b.textContent='TAP!';},rnd(1200,3500));
+}
+ACT.rx=()=>{
+  const b=$('#rb');
+  if(G.ph==='wait'){stopTimer();G.early++;G.ph='x';$('#er').textContent=G.early;b.textContent='TOO EARLY';later(rxNext,1000);return;}
+  if(G.ph!=='go')return;
+  const t=Math.round(performance.now()-G.st);G.times.push(t);G.ph='x';b.classList.remove('go');b.textContent=t+' ms';
+  later(G.times.length>=G.rounds?rxEnd:rxNext,900);
+};
+function rxEnd(){
+  const avg=Math.round(G.times.reduce((a,b)=>a+b,0)/G.times.length);
+  endGame('react',Math.max(0,1500-avg*3-G.early*20),Math.round(Math.max(0,1500-avg*3)/20)+5,'COMPLETE',
+   [['AVERAGE',avg+' ms'],['FASTEST',Math.min(...G.times)+' ms'],['EARLY TAPS',G.early],['ROUNDS',G.rounds]]);
+}
+
+/* Target recognition */
+const SYM=['▲','●','■','◆','★','✚'];
+const tgScore=()=>Math.max(0,G.hits*10-G.miss*5);
+function tgInit(){G.t=G.dur||30;G.hits=0;G.miss=0;G.n=3+G.d;}
+function tgView(){return hudBar('TIME','tm',G.t,'SCORE','sc',0)+`<div class="hud" style="text-align:center"><small>FIND THIS SHAPE</small><div class="big" id="tt" style="font-size:54px"></div></div><div class="mg" id="mg" style="grid-template-columns:repeat(${G.n},1fr)"></div>`;}
+function tgNext(){
+  const N=G.n*G.n,t=rnd(0,5),at=rnd(0,N-1),o=SYM.filter((_,i)=>i!==t);let h='';G.at=at;
+  for(let i=0;i<N;i++)h+=`<button class="mc" data-act="tg" data-v="${i}">${i===at?SYM[t]:o[rnd(0,4)]}</button>`;
+  $('#tt').textContent=SYM[t];$('#mg').innerHTML=h;$('#sc').textContent=tgScore();
+}
+ACT.tg=v=>{if(+v===G.at){G.hits++;buzz(12);}else{G.miss++;buzz([40,30,40]);}tgNext();};
+function tgTick(){
+  G.t--;$('#tm').textContent=G.t;
+  if(G.t<=0)endGame('tgt',tgScore(),G.hits*3+5,'TIME UP',[['FOUND',G.hits],['MISSES',G.miss],
+   ['ACCURACY',(G.hits+G.miss?Math.round(G.hits/(G.hits+G.miss)*100):0)+'%'],['DIFFICULTY',DIFF[G.d]]]);
+}
+
+/* Logic puzzles + Spatial reasoning: multiple-choice engine (reuses the Blitz timer and scoring) */
+function logicQ(){
+  if(rnd(0,2)>0){
+    const n=G.d===0?3:4,names=shuffle(['A','B','C','D','E','F']).slice(0,n);
+    const st=shuffle(names.slice(0,-1).map((x,i)=>x+' is taller than '+names[i+1]+'.'));
+    const qs=[['Who is the tallest?',0],['Who is the shortest?',n-1],['Who is second tallest?',1]][G.d===2?rnd(0,2):rnd(0,1)];
+    const o=shuffle(names);
+    return{html:st.join('<br>')+'<br><b>'+qs[0]+'</b>',opts:o,ans:o.indexOf(names[qs[1]])};
+  }
+  const k=[2,4,6,8][rnd(0,G.d+1)];let a,o;
+  do{a=[1,2,3].map(()=>k*rnd(1,12));}while(new Set(a).size<3);
+  do{o=rnd(2,70);}while(o%k===0);
+  const all=shuffle(a.concat(o));
+  return{html:'<b>Which number does not belong?</b>',opts:all,ans:all.indexOf(o)};
+}
+const rotCW=(a,n)=>a.map((_,i)=>a[(n-1-i%n)*n+Math.floor(i/n)]);
+const mirror=(a,n)=>a.map((_,i)=>a[Math.floor(i/n)*n+(n-1-i%n)]);
+const miniHtml=(a,n)=>`<div class="mini" style="grid-template-columns:repeat(${n},1fr)">${a.map(v=>`<i class="${v?'f':''}"></i>`).join('')}</div>`;
+function spatialQ(){
+  const n=G.d===0?3:4,k=G.d===0?1:rnd(1,3),nm=['','90° clockwise','180°','90° anticlockwise'],key=a=>a.join('');
+  for(;;){
+    const p=Array.from({length:n*n},()=>rnd(0,99)<45?1:0);
+    const rot=j=>{let r=p;for(let x=0;x<j;x++)r=rotCW(r,n);return r;};
+    const ans=rot(k),seen=new Set([key(ans)]),d=[];
+    [0,1,2,3].filter(j=>j!==k).map(rot).concat([mirror(ans,n)]).forEach(c=>{if(!seen.has(key(c))){seen.add(key(c));d.push(c);}});
+    if(d.length<3)continue;
+    const o=shuffle([ans].concat(shuffle(d).slice(0,3)));
+    return{html:'<div style="text-align:center"><b>Which shape is this rotated '+nm[k]+'?</b>'+miniHtml(p,n)+'</div>',
+      opts:o.map(x=>miniHtml(x,n)),ans:o.findIndex(x=>key(x)===key(ans))};
+  }
+}
+function mcView(){return hudBar('TIME','tm',G.dur||60,'SCORE','sc',0)+`<div class="tb"><i id="tbar"></i></div><div class="hud" id="mq" style="font-size:18px;line-height:1.7"></div><div class="opts" id="mo"></div>`;}
+function mcNext(){
+  G.q=G.game==='logic'?logicQ():spatialQ();
+  $('#mq').innerHTML=G.q.html;
+  $('#mo').innerHTML=G.q.opts.map((h,i)=>`<button class="opt" data-act="mc" data-v="${i}">${h}</button>`).join('');
+  $('#sc').textContent=G.score;
+}
+ACT.mc=v=>{
+  if(!G.q)return;
+  const ok=+v===G.q.ans;G.total++;
+  if(ok){G.ok++;G.combo++;G.maxCombo=Math.max(G.maxCombo,G.combo);G.score+=10+Math.min(G.combo,10);}else G.combo=0;
+  const q=$('#mq');q.classList.remove('ok','bad');void q.offsetWidth;q.classList.add(ok?'ok':'bad');buzz(ok?12:[40,30,40]);
+  mcNext();
+};
+
+/* Engine registry: every playable game plugs in here */
+const MC={init:blitzInit,view:mcView,tick:blitzTick,first:mcNext},BL={init:blitzInit,view:blitzView,tick:blitzTick,first:blitzNext},GM={init:gmInit,view:gmView,first:gmRound};
+const ENG={blitz:BL,mental:BL,seq:BL,sudoku:{init:sudokuInit,view:sudokuView,tick:sudokuTick},
+ nmem:{init:nmInit,view:nmView,first:nmNext},pmem:GM,posm:GM,srec:GM,
+ react:{init:rxInit,view:rxView,first:rxNext},tgt:{init:tgInit,view:tgView,tick:tgTick,first:tgNext},logic:MC,spatial:MC};
+
+/* ===== 10b. PRIVATE ROOMS (LOCAL SIMULATION) =====
+   Rooms is the only place that stores rooms. In Phase 7 replace its method bodies with Firebase/Supabase calls. */
+const CH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',BOTS=['Kai','Nova','Rex','Zed','Mira','Jax','Luna','Orion','Vex'];
+let RM=null,MATCH=null;
+function newBot(taken){const f=BOTS.filter(n=>!taken.includes(n)),pool=f.length?f:BOTS;return{id:'b'+Math.random().toString(36).slice(2,7),name:pool[rnd(0,pool.length-1)],bot:1,skill:rnd(60,120)/100};}
+const Rooms={
+  key:'apex_rooms',
+  all(){try{return JSON.parse(localStorage.getItem(this.key)||'{}');}catch(e){return {};}},
+  get(c){return this.all()[c]||null;},
+  save(r){const a=this.all();a[r.code]=r;const o={};Object.values(a).sort((x,y)=>y.created-x.created).slice(0,8).forEach(x=>o[x.code]=x);
+    try{localStorage.setItem(this.key,JSON.stringify(o));}catch(e){}},
+  remove(c){const a=this.all();delete a[c];try{localStorage.setItem(this.key,JSON.stringify(a));}catch(e){}},
+  create(name){let code;do{code=Array.from({length:5},()=>CH[rnd(0,CH.length-1)]).join('');}while(this.get(code));
+    const r={code,host:'me',mode:'ffa',max:4,players:[{id:'me',name,host:1},newBot([name])],games:['blitz'],diff:1,dur:60,rounds:3,created:Date.now()};
+    this.save(r);return r;}
+};
+function refresh(){const y=window.scrollY;show(CURN);window.scrollTo(0,y);}
+function rsave(){const sq=CURN==='squad';(sq?Squads:Rooms).save(sq?SQ:RM);refresh();}
+const modeName=m=>m==='ffa'?'Free-for-all':m==='1v1'?'1v1':'Custom';
+
+V.rooms=()=>{
+  const list=Object.values(Rooms.all()).sort((a,b)=>b.created-a.created);
+  return `<div class="top"><div class="logo">APEX<span>BRAIN</span></div></div>
+  <div class="banner">${emb()}<div><h1>PRIVATE ROOMS</h1><small>Local simulation · bots fill the other seats</small></div></div>
+  ${onRoomsBlock()}<button class="btn solid" data-act="rcreate">CREATE ROOM</button>
+  <div class="hud"><div class="lbl">JOIN WITH A CODE</div><input class="inp" id="jc" maxlength="5" autocomplete="off" autocapitalize="characters" placeholder="CODE"><button class="btn" style="margin:0" data-act="rjoin">JOIN ROOM</button></div>
+  <h2>ROOMS ON THIS PHONE</h2>
+  ${list.length?list.map(r=>`<button class="item" data-act="ropen" data-v="${r.code}"><span><b>${r.code}</b><br><small>${modeName(r.mode)} · ${r.players.length}/${r.max} players · ${r.rounds} rounds</small></span><span class="tag">OPEN</span></button>`).join(''):'<p class="note">No rooms yet. Create one to get a code.</p>'}
+  <p class="note">Codes only work on this phone until the online backend is added in Phase 7.</p>`;
+};
+const chipRow=(act,cur,items)=>`<div class="chips">${items.map(i=>`<button class="${i[0]==cur?'on':''}" data-act="${act}" data-v="${i[0]}">${i[1]}</button>`).join('')}</div>`;
+V.lobby=()=>{
+  const n=RM.players.length;
+  return `<div class="top"><div class="logo">ROOM LOBBY</div><button class="chip" data-act="rcopy">COPY CODE</button></div>
+  <div class="banner">${emb()}<div><small>ROOM CODE</small><h1>${RM.code}</h1></div></div>
+  <p class="note">Simulated room: bots stand in for other players. Real online rooms arrive in Phase 7.</p>
+  <div class="hud"><div class="lbl">PLAYERS ${n} / ${RM.max}</div>
+  ${RM.players.map(p=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--l)"><div class="grow name">${esc(p.name)}</div>${p.host?'<span class="tag live">HOST</span>':''}${p.bot?`<span class="tag">BOT</span><button class="chip" data-act="rrem" data-v="${p.id}">✕</button>`:''}</div>`).join('')}
+  ${n<RM.max?'<button class="btn" style="margin:10px 0 0" data-act="radd">ADD BOT PLAYER</button>':''}</div>
+  <div class="lbl">MODE</div>${chipRow('rmode',RM.mode,[['1v1','1v1'],['ffa','FREE-FOR-ALL'],['custom','CUSTOM']])}
+  ${RM.mode==='custom'?`<div class="hud row"><span class="grow lbl">MAX PLAYERS</span><button class="chip" style="padding:10px 18px" data-act="rmax" data-v="-1">−</button><b style="width:28px;text-align:center">${RM.max}</b><button class="chip" style="padding:10px 18px" data-act="rmax" data-v="1">+</button></div>`:''}
+  <div class="lbl">GAMES (ROUNDS CYCLE THROUGH YOUR PICKS)</div>
+  <div class="g2">${GAMES.filter(g=>g[3]).map(g=>`<button class="${RM.games.includes(g[1])?'on':''}" data-act="rgame" data-v="${g[1]}">${g[2]}</button>`).join('')}</div>
+  <div class="lbl">DIFFICULTY</div>${chipRow('rdiff',RM.diff,DIFF.map((d,i)=>[i,d]))}
+  <div class="lbl">ROUND TIME (TIMED GAMES ONLY)</div>${chipRow('rdur',RM.dur,[[30,'30 SEC'],[60,'60 SEC'],[90,'90 SEC']])}
+  <div class="lbl">ROUNDS</div>${chipRow('rrounds',RM.rounds,[[1,'1'],[3,'3'],[5,'5']])}
+  <button class="btn solid" style="margin-top:6px" data-act="rstart">START MATCH</button>
+  <button class="btn" data-act="rclose">CLOSE ROOM</button>`;
+};
+Object.assign(ACT,{
+  rcreate(){RM=Rooms.create(S.name);show('lobby');},
+  ropen(c){const r=Rooms.get(c);if(!r){toast('Room not found');return;}RM=r;RM.players[0].name=S.name;show('lobby');},
+  rjoin(){const c=($('#jc').value||'').trim().toUpperCase();
+    if(!/^[A-Z0-9]{5}$/.test(c)){toast('Enter the 5-character code');return;}
+    if(!Rooms.get(c)){toast('No room with that code on this phone');return;}
+    ACT.ropen(c);},
+  rcopy(){const c=(CURN==='squad'?SQ:RM).code;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(c).then(()=>toast('Code copied'),()=>toast('Code: '+c));else toast('Code: '+c);},
+  rmode(m){const prev=RM.mode;RM.mode=m;if(m==='1v1')RM.max=2;else if(m==='ffa')RM.max=4;else if(prev!=='custom')RM.max=6;
+    RM.players=RM.players.slice(0,RM.max);rsave();},
+  rmax(d){RM.max=Math.min(8,Math.max(RM.players.length,2,RM.max+ +d));rsave();},
+  radd(){if(RM.players.length>=RM.max)return;RM.players.push(newBot(RM.players.map(p=>p.name)));rsave();},
+  rrem(id){RM.players=RM.players.filter(p=>p.id!==id);rsave();},
+  rgame(g){const X=CURN==='squad'?SQ:RM,i=X.games.indexOf(g);if(i>=0){if(X.games.length===1){toast('Pick at least one game');return;}X.games.splice(i,1);}else X.games.push(g);rsave();},
+  rdiff(v){(CURN==='squad'?SQ:RM).diff=+v;rsave();},rdur(v){(CURN==='squad'?SQ:RM).dur=+v;rsave();},rrounds(v){(CURN==='squad'?SQ:RM).rounds=+v;rsave();},
+  rclose(){if(confirm('Close room '+RM.code+'?')){Rooms.remove(RM.code);RM=null;show('rooms');}},
+  rstart(){
+    if(RM.players.length<2){toast('Add at least one more player');return;}
+    const room=JSON.parse(JSON.stringify(RM));
+    MATCH={room,games:Array.from({length:room.rounds},(_,i)=>room.games[i%room.games.length]),r:0,res:[],final:false,xp:0};
+    ACT.mnext();},
+  rrematch(){RM=Rooms.get(MATCH.room.code)||RM;ACT.rstart();},
+  mnext(){const M=MATCH;G={game:M.games[M.r],d:M.room.diff,dur:M.room.dur};ACT.start();}
+});
+
+/* ===== 10c. MATCH ENGINE (human plays for real, bot scores are simulated) ===== */
+const REF={blitz:220,mental:170,seq:150,logic:160,spatial:140,sudoku:700,nmem:120,pmem:90,posm:100,srec:90,react:850,tgt:130};
+const TB={blitz:60,mental:60,seq:60,logic:60,spatial:60,tgt:30};
+function standings(M){
+  const P=M.room.players.map(p=>({id:p.id,name:p.name,pts:0,raw:0}));
+  M.res.forEach(r=>{[...P].sort((a,b)=>r.scores[b.id]-r.scores[a.id]).forEach((p,i)=>{p.pts+=P.length-i;});P.forEach(p=>{p.raw+=r.scores[p.id];});});
+  return P.sort((a,b)=>b.pts-a.pts||b.raw-a.raw);
+}
+function matchRound(score){
+  if(MATCH.online)return onlineRound(score);
+  const M=MATCH,g=M.games[M.r],f=TB[g]?M.room.dur/TB[g]:1,sc={me:score};
+  M.room.players.forEach(p=>{if(p.bot)sc[p.id]=Math.round(REF[g]*f*p.skill*(0.8+Math.random()*0.4));});
+  M.res.push({game:g,scores:sc});M.r++;
+  if(M.r>=M.room.rounds){
+    M.final=true;if(M.teams){finishSquad(M);show('match');return;}
+    const st=standings(M),win=st[0].id==='me',pl=st.findIndex(p=>p.id==='me');M.xp=10+(win?30:0);
+    addXp(M.xp);S.mGames=(S.mGames||0)+1;if(win)S.mWins=(S.mWins||0)+1;
+    if(M.duel){const h=S.h2h[M.duel]||(S.h2h[M.duel]=[0,0]);h[win?0:1]++;}
+    addHist({k:M.duel?'Challenge':'Room',t:M.duel?'vs '+M.room.players[1].name:'Room '+M.room.code,r:win?'WIN':'LOSS',s:st[pl].raw,x:'#'+(pl+1)+' of '+st.length});
+    saveState();
+  }
+  show('match');
+}
+V.match=()=>{
+  const M=MATCH,st=standings(M),win=M.final&&st[0].id==='me',nm=Object.fromEntries(M.room.players.map(p=>[p.id,p.id==='me'?'You':p.name]));
+  const head=M.final
+    ?`<div class="banner">${emb()}<h1>${win?'VICTORY':'DEFEAT'}</h1></div><div class="reward">YOU GOT +${M.xp} XP THIS MATCH!</div>`
+    :`<div class="banner">${emb()}<div><h1>ROUND ${M.r} DONE</h1><small>Room ${M.room.code} · ${M.room.rounds-M.r} to go</small></div></div>`;
+  return head+`<div class="hud"><div class="lbl">STANDINGS (PLACEMENT POINTS / TOTAL SCORE)</div>
+  ${st.map((p,i)=>`<div class="row" style="padding:9px 0;border-bottom:1px solid var(--l)"><b style="width:22px">${i+1}</b><span class="grow name">${esc(nm[p.id])}</span><b>${p.pts} PTS</b><small style="width:64px;text-align:right">${p.raw}</small></div>`).join('')}</div>
+  <div class="hud"><div class="lbl">ROUND RESULTS</div><ul class="pl">${M.res.map((r,i)=>`<li><b>R${i+1} ${GAMES.find(g=>g[1]===r.game)[2]}</b><br><small>${Object.keys(r.scores).sort((a,b)=>r.scores[b]-r.scores[a]).map(id=>nm[id]+' '+r.scores[id]).join(' · ')}</small></li>`).join('')}</ul></div>
+  <p class="note">${M.final?'Match over. ':''}Your scores are real. Bot scores are simulated, so this is not online multiplayer.</p>
+  ${M.final?`${M.duel?'<button class="btn solid" data-act="duelre">REMATCH</button><button class="btn" data-act="popen" data-v="'+M.duel+'">BACK TO PROFILE</button>':'<button class="btn solid" data-act="rrematch">REMATCH</button><button class="btn" data-act="ropen" data-v="'+M.room.code+'">BACK TO LOBBY</button>'}<button class="btn" data-go="home">HOME</button>`
+   :`<button class="btn solid" data-act="mnext">NEXT ROUND: ${GAMES.find(g=>g[1]===M.games[M.r])[2].toUpperCase()}</button>`}`;
+};
+
+/* ===== 10d. SQUADS (LOCAL SIMULATION) ===== */
+let SQ=null,CURN='home';
+const Squads=Object.assign(Object.create(Rooms),{key:'apex_squads',create(){
+  let code;do{code=Array.from({length:5},()=>CH[rnd(0,CH.length-1)]).join('');}while(this.get(code));
+  const sq={code,mode:'2v2',size:2,teams:[{name:'ALPHA',players:[{id:'me',name:S.name,host:1}]},{name:'BRAVO',players:[]}],games:['blitz'],diff:1,dur:60,rounds:3,created:Date.now()};
+  sqFill(sq);this.save(sq);return sq;}});
+const sqNames=sq=>sq.teams.flatMap(t=>t.players.map(p=>p.name));
+function sqFill(sq){sq.teams.forEach(t=>{while(t.players.length<sq.size)t.players.push(newBot(sqNames(sq)));});}
+function sqTrim(){SQ.teams.forEach(t=>{while(t.players.length>SQ.size){const i=t.players.map(p=>!!p.bot).lastIndexOf(true);if(i<0)break;t.players.splice(i,1);}});}
+
+V.squads=()=>{
+  const list=Object.values(Squads.all()).sort((a,b)=>b.created-a.created),q=S.sq||{m:0,w:0,rw:0,mvp:0,best:0};
+  return `<div class="top"><div class="logo">APEX<span>BRAIN</span></div></div>
+  <div class="banner">${emb()}<div><h1>SQUADS</h1><small>Local simulation · bots fill the squads</small></div></div>
+  <button class="btn solid" data-act="sqcreate">CREATE SQUAD MATCH</button>
+  <div class="hud"><div class="lbl">JOIN WITH A SQUAD CODE</div><input class="inp" id="sjc" maxlength="5" autocomplete="off" autocapitalize="characters" placeholder="CODE"><button class="btn" style="margin:0" data-act="sqjoin">JOIN SQUAD</button></div>
+  <h2>SQUADS ON THIS PHONE</h2>
+  ${list.length?list.map(r=>`<button class="item" data-act="sqopen" data-v="${r.code}"><span><b>${r.code}</b><br><small>${esc(r.teams[0].name)} vs ${esc(r.teams[1].name)} · ${r.size}v${r.size} · ${r.rounds} rounds</small></span><span class="tag">OPEN</span></button>`).join(''):'<p class="note">No squads yet. Create one to get a code.</p>'}
+  <h2>SQUAD STATISTICS</h2>
+  <div class="stats"><div><small>MATCHES</small><b>${q.m}</b></div><div><small>WINS / WIN RATE</small><b>${q.w} / ${q.m?Math.round(q.w/q.m*100):0}%</b></div>
+  <div><small>LOSSES</small><b>${q.m-q.w}</b></div><div><small>ROUNDS WON</small><b>${q.rw}</b></div>
+  <div><small>MVP AWARDS</small><b>${q.mvp}</b></div><div><small>BEST TEAM SCORE</small><b>${q.best}</b></div></div>
+  <p class="note">Squad stats count simulated matches against bots on this phone. Online squads arrive in Phase 7.</p>`;
+};
+V.squad=()=>{
+  const sz=SQ.size;
+  const team=(t,i)=>`<div class="hud"><div class="row"><button class="grow bebas" style="text-align:left;font-size:28px" data-act="sqname" data-v="${i}">${esc(t.name)}</button>${t.players.some(p=>p.id==='me')?'<span class="tag live">YOUR SQUAD</span>':''}<small>${t.players.length}/${sz}</small></div>
+  ${t.players.map(p=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--l)"><div class="grow name">${esc(p.name)}</div>${p.host?'<span class="tag live">HOST</span>':''}${p.bot?'<span class="tag">BOT</span>':''}<button class="chip" data-act="sqmove" data-v="${p.id}">${i?'→ A':'→ B'}</button>${p.bot?`<button class="chip" data-act="sqrem" data-v="${p.id}">✕</button>`:''}</div>`).join('')}
+  ${t.players.length<sz?`<button class="btn" style="margin:10px 0 0" data-act="sqinv" data-v="${i}">INVITE PLAYER (SIMULATED)</button>`:''}</div>`;
+  return `<div class="top"><div class="logo">SQUAD LOBBY</div><button class="chip" data-act="rcopy">COPY CODE</button></div>
+  <div class="banner">${emb()}<div><small>SQUAD CODE</small><h1>${SQ.code}</h1></div></div>
+  <p class="note">Simulated: invites add bots. Tap a squad name to rename it, and → to move a player to the other squad.</p>
+  <div class="lbl">MODE</div>${chipRow('sqmode',SQ.mode,[['2v2','2v2'],['3v3','3v3'],['custom','CUSTOM']])}
+  ${SQ.mode==='custom'?`<div class="hud row"><span class="grow lbl">PLAYERS PER SQUAD</span><button class="chip" style="padding:10px 18px" data-act="sqsize" data-v="-1">−</button><b style="width:28px;text-align:center">${sz}</b><button class="chip" style="padding:10px 18px" data-act="sqsize" data-v="1">+</button></div>`:''}
+  ${SQ.teams.map(team).join('')}
+  <button class="btn" data-act="sqfill">FILL EMPTY SLOTS WITH BOTS</button>
+  <div class="lbl">GAMES (ROUNDS CYCLE THROUGH YOUR PICKS)</div>
+  <div class="g2">${GAMES.filter(g=>g[3]).map(g=>`<button class="${SQ.games.includes(g[1])?'on':''}" data-act="rgame" data-v="${g[1]}">${g[2]}</button>`).join('')}</div>
+  <div class="lbl">DIFFICULTY</div>${chipRow('rdiff',SQ.diff,DIFF.map((d,i)=>[i,d]))}
+  <div class="lbl">ROUND TIME (TIMED GAMES ONLY)</div>${chipRow('rdur',SQ.dur,[[30,'30 SEC'],[60,'60 SEC'],[90,'90 SEC']])}
+  <div class="lbl">ROUNDS</div>${chipRow('rrounds',SQ.rounds,[[1,'1'],[3,'3'],[5,'5']])}
+  <button class="btn solid" style="margin-top:6px" data-act="sqstart">START SQUAD MATCH</button>
+  <button class="btn" data-act="sqclose">CLOSE SQUAD</button>`;
+};
+Object.assign(ACT,{
+  sqcreate(){SQ=Squads.create();show('squad');},
+  sqopen(c){const r=Squads.get(c);if(!r){toast('Squad not found');return;}SQ=r;SQ.teams.forEach(t=>t.players.forEach(p=>{if(p.id==='me')p.name=S.name;}));show('squad');},
+  sqjoin(){const c=($('#sjc').value||'').trim().toUpperCase();
+    if(!/^[A-Z0-9]{5}$/.test(c)){toast('Enter the 5-character code');return;}
+    if(!Squads.get(c)){toast('No squad with that code on this phone');return;}ACT.sqopen(c);},
+  sqmode(m){const prev=SQ.mode;SQ.mode=m;SQ.size=m==='2v2'?2:m==='3v3'?3:(prev==='custom'?SQ.size:4);sqTrim();rsave();},
+  sqsize(d){SQ.size=Math.min(5,Math.max(2,SQ.size+ +d));sqTrim();rsave();},
+  sqname(i){const n=prompt('Squad name (max 12 characters)',SQ.teams[i].name);if(n===null)return;
+    const t=n.trim().slice(0,12).toUpperCase();if(!t){toast('Name cannot be empty');return;}SQ.teams[i].name=t;rsave();},
+  sqmove(id){const a=SQ.teams.findIndex(t=>t.players.some(p=>p.id===id)),b=1-a;
+    if(SQ.teams[b].players.length>=SQ.size){toast('That squad is full');return;}
+    const i=SQ.teams[a].players.findIndex(p=>p.id===id);SQ.teams[b].players.push(SQ.teams[a].players.splice(i,1)[0]);rsave();},
+  sqinv(i){const t=SQ.teams[i];if(t.players.length>=SQ.size)return;t.players.push(newBot(sqNames(SQ)));rsave();},
+  sqrem(id){SQ.teams.forEach(t=>{t.players=t.players.filter(p=>p.id!==id);});rsave();},
+  sqfill(){sqFill(SQ);rsave();},
+  sqclose(){if(confirm('Close squad '+SQ.code+'?')){Squads.remove(SQ.code);SQ=null;show('squads');}},
+  sqstart(){
+    if(!SQ.teams.every(t=>t.players.length===SQ.size)){toast('Both squads need '+SQ.size+' players. Use Fill with bots.');return;}
+    const room={code:SQ.code,players:JSON.parse(JSON.stringify(SQ.teams.flatMap(t=>t.players))),rounds:SQ.rounds,dur:SQ.dur,diff:SQ.diff,games:SQ.games.slice()};
+    MATCH={room,games:Array.from({length:room.rounds},(_,i)=>room.games[i%room.games.length]),r:0,res:[],final:false,xp:0,
+      teams:SQ.teams.map(t=>t.players.map(p=>p.id)),tn:SQ.teams.map(t=>t.name),my:SQ.teams.findIndex(t=>t.players.some(p=>p.id==='me')),sq:SQ.code};
+    ACT.mnext();},
+  sqrematch(){SQ=Squads.get(MATCH.sq)||SQ;ACT.sqstart();}
+});
+
+/* ===== 10e. SQUAD MATCH RESULTS: team score vs individual score ===== */
+const tsum=(M,t,r)=>M.teams[t].reduce((a,id)=>a+M.res[r].scores[id],0);
+function squadTotals(M){
+  const w=[0,0],tot=[0,0];
+  M.res.forEach((r,i)=>{const a=tsum(M,0,i),b=tsum(M,1,i);tot[0]+=a;tot[1]+=b;if(a>b)w[0]++;else if(b>a)w[1]++;});
+  return{w,tot};
+}
+function finishSquad(M){
+  const {w,tot}=squadTotals(M);
+  M.win=w[0]!==w[1]?(w[0]>w[1]?0:1):(tot[0]>=tot[1]?0:1);
+  const won=M.win===M.my,mvp=standings(M)[0].id==='me';
+  M.xp=15+(won?35:0)+(mvp?10:0);addXp(M.xp);
+  const q=S.sq=Object.assign({m:0,w:0,rw:0,mvp:0,best:0},S.sq);
+  q.m++;if(won)q.w++;q.rw+=w[M.my];if(mvp)q.mvp++;q.best=Math.max(q.best,tot[M.my]);addHist({k:'Squad',t:M.tn[M.my]+' vs '+M.tn[1-M.my],r:won?'WIN':'LOSS',s:tot[M.my],x:mvp?'MVP':''});saveState();
+}
+function squadMatchView(M){
+  const {w,tot}=squadTotals(M),st=standings(M),nm={},tm={};
+  M.room.players.forEach(p=>{nm[p.id]=p.id==='me'?'You':p.name;});
+  M.teams.forEach((ids,t)=>ids.forEach(id=>{tm[id]=M.tn[t];}));
+  const win=M.final&&M.win===M.my;
+  const head=M.final?`<div class="banner">${emb()}<h1>${win?'VICTORY':'DEFEAT'}</h1></div><div class="reward">YOU GOT +${M.xp} XP THIS MATCH!</div>`
+   :`<div class="banner">${emb()}<div><h1>ROUND ${M.r} DONE</h1><small>Squad ${M.sq} · ${M.room.rounds-M.r} to go</small></div></div>`;
+  const row='padding:9px 0;border-bottom:1px solid var(--l)';
+  return head+`<div class="hud"><div class="lbl">TEAM RESULT (ROUNDS WON / TOTAL SCORE)</div>
+  ${[0,1].map(t=>`<div class="row" style="${row}"><span class="grow name">${esc(M.tn[t])}${t===M.my?' (YOU)':''}</span>${M.final&&M.win===t?'<span class="tag live">WINNER</span>':''}<small>${w[t]} RDS</small><b style="width:60px;text-align:right">${tot[t]}</b></div>`).join('')}</div>
+  <div class="hud"><div class="lbl">INDIVIDUAL PERFORMANCE (PLACEMENT POINTS / TOTAL SCORE)</div>
+  ${st.map((p,i)=>`<div class="row" style="${row}"><b style="width:22px">${i+1}</b><span class="grow"><span class="name">${esc(nm[p.id])}</span><small>${esc(tm[p.id])}</small></span>${M.final&&i===0?'<span class="tag live">MVP</span>':''}<b>${p.pts} PTS</b><small style="width:56px;text-align:right">${p.raw}</small></div>`).join('')}</div>
+  <div class="hud"><div class="lbl">ROUND RESULTS</div><ul class="pl">${M.res.map((r,i)=>`<li><b>R${i+1} ${GAMES.find(g=>g[1]===r.game)[2]}</b>: ${esc(M.tn[0])} ${tsum(M,0,i)} vs ${esc(M.tn[1])} ${tsum(M,1,i)}<br><small>${Object.keys(r.scores).sort((a,b)=>r.scores[b]-r.scores[a]).map(id=>nm[id]+' '+r.scores[id]).join(' · ')}</small></li>`).join('')}</ul></div>
+  <p class="note">Team score adds up every squad member's score. The squad that wins more rounds takes the match. Your score is real. All other scores are simulated, so this is not online multiplayer.</p>
+  ${M.final?`<button class="btn solid" data-act="sqrematch">REMATCH</button><button class="btn" data-act="sqopen" data-v="${M.sq}">BACK TO SQUAD</button><button class="btn" data-go="home">HOME</button>`
+   :`<button class="btn solid" data-act="mnext">NEXT ROUND: ${GAMES.find(g=>g[1]===M.games[M.r])[2].toUpperCase()}</button>`}`;
+}
+const matchSolo=V.match;
+V.match=()=>MATCH.teams?squadMatchView(MATCH):matchSolo();
+
+/* ===== 10f. PHASE 5: PLAYERS, FRIENDS, PROFILES, LEADERBOARDS (LOCAL SIMULATION) =====
+   NAMES is a simulated player directory with fixed stats per name. In Phase 7 replace player(), the S.friends/S.reqs/S.sent lists and boardRows() with backend calls. */
+const NAMES=['Kai','Nova','Rex','Zed','Mira','Jax','Luna','Orion','Vex','Axel','Piper','Sage','Titan','Echo','Blaze','Quinn','Raven','Ember','Dash','Flux','Ivy','Onyx','Pixel','Rune'];
+function hash(s){let h=2166136261;s=String(s);for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function rng(s){let a=hash(s);return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function weekId(){return Math.floor((Date.now()/864e5+3)/7);}
+function addXp(n){const lo=lvOf(S.xp);S.xp+=n;if(lvOf(S.xp)>lo)notify('LEVEL UP · LEVEL '+lvOf(S.xp)+' · '+rankOf(lvOf(S.xp)).toUpperCase());const w=weekId();if(!S.wk||S.wk.id!==w)S.wk={id:w,xp:0};S.wk.xp+=n;}
+const myWeek=()=>S.wk&&S.wk.id===weekId()?S.wk.xp:0;
+function addHist(h){h.d=Date.now();S.hist.unshift(h);S.hist=S.hist.slice(0,30);}
+const gname=g=>GAMES.find(x=>x[1]===g)[2];
+const wr=(w,g)=>g?Math.round(w/g*100)+'%':'—';
+function ago(d){const m=Math.floor((Date.now()-d)/6e4);return m<1?'just now':m<60?m+' min ago':m<1440?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' d ago';}
+
+const PCACHE={};
+function player(id){
+  if(PCACHE[id])return PCACHE[id];
+  const r=rng('apex:'+id),xp=Math.round(100+Math.pow(r(),1.8)*2400),games=Math.round(xp/14+r()*10),
+   mG=Math.max(3,Math.round(games*(.4+r()*.3))),mW=Math.round(mG*(.3+r()*.4)),best={};
+  GAMES.forEach(g=>{best[g[1]]=Math.round(REF[g[1]]*(.5+r()*.9));});
+  return PCACHE[id]={id,name:id,xp,games,mG,mW,best,skill:+(.6+xp/2500*.5+r()*.1).toFixed(2)};
+}
+const weekXp=id=>Math.round(rng('wk'+weekId()+id)()*(120+player(id).xp/10));
+const online=id=>hash(id+Math.floor(Date.now()/36e5))%10<4;
+function totals(){const q=S.sq||{};return{g:(S.mGames||0)+(q.m||0),w:(S.mWins||0)+(q.w||0)};}
+function meEntry(){const t=totals();return{id:'me',name:S.name,xp:S.xp,mG:t.g,mW:t.w,best:S.best,me:1};}
+const grank=(xp,me)=>NAMES.filter(n=>player(n).xp>xp).length+(!me&&S.xp>xp?1:0)+1;
+const isFriend=id=>S.friends.includes(id),isSent=id=>S.sent.some(x=>x.id===id),isReq=id=>S.reqs.includes(id);
+
+/* Sent requests: simulated players reply after ~4 seconds (about 4 in 5 accept) */
+function resolveSent(){
+  const now=Date.now(),out=[];
+  S.sent=S.sent.filter(x=>{
+    if(now-x.ts<4000)return true;
+    const ok=hash('acc'+x.id+x.ts)%5!==0;
+    if(ok&&!isFriend(x.id))S.friends.push(x.id);
+    out.push([x.id,ok]);return false;});
+  if(out.length)saveState();
+  return out;
+}
+
+let FT='list',FQ='',PID=null,PBACK='friends',CG='blitz',RS='global',RG='all';
+const avatar=(n,sz)=>`<span class="av bebas" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.55)}px">${esc(n[0]||'P').toUpperCase()}</span>`;
+function pRow(id,extra){
+  const p=player(id),lv=lvOf(p.xp),on=online(id);
+  return `<button class="item" data-act="popen" data-v="${id}"><span class="row" style="gap:12px;min-width:0">${avatar(p.name,44)}<span><b>${esc(p.name)}</b><br><small>LV ${lv} · ${rankOf(lv)} · ${wr(p.mW,p.mG)} WIN RATE</small></span></span>${extra||`<span class="tag ${on?'live':''}">${on?'ONLINE':'OFFLINE'}</span>`}</button>`;
+}
+function actRow(id,label,act){
+  const p=player(id),lv=lvOf(p.xp);
+  return `<div class="item"><button class="grow row" style="text-align:left;gap:12px" data-act="popen" data-v="${id}">${avatar(p.name,44)}<span><b>${esc(p.name)}</b><br><small>LV ${lv} · ${rankOf(lv)}</small></span></button><button class="chip" data-act="${act}" data-v="${id}">${label}</button></div>`;
+}
+function findHtml(){
+  const q=FQ.trim().toLowerCase();
+  const list=q?NAMES.filter(n=>n.toLowerCase().includes(q)).sort()
+   :NAMES.filter(n=>!isFriend(n)&&!isSent(n)).sort((a,b)=>hash(a+'s')-hash(b+'s')).slice(0,8);
+  if(!list.length)return '<p class="note">No players found.</p>';
+  return (q?'':'<div class="lbl" style="margin:6px 0">SUGGESTED PLAYERS</div>')+list.map(id=>
+    isFriend(id)||isSent(id)?pRow(id,`<span class="tag">${isFriend(id)?'FRIENDS':'PENDING'}</span>`)
+    :actRow(id,isReq(id)?'ACCEPT':'ADD','fadd')).join('');
+}
+function histRows(a){
+  return a.map(h=>`<div class="row" style="padding:9px 0;border-bottom:1px solid var(--l)"><span class="grow"><b>${esc(h.t)}</b><br><small>${esc(h.k).toUpperCase()}${h.x?' · '+esc(h.x):''} · ${ago(h.d)}</small></span>${h.r?`<span class="tag ${h.r==='WIN'?'live':''}">${h.r}</span>`:''}<b class="bebas" style="font-size:24px;min-width:48px;text-align:right">${h.s}</b></div>`).join('');
+}
+function simHist(id){
+  const p=player(id),r=rng('hist'+id);
+  return Array.from({length:5},(_,i)=>{
+    const g=GAMES[Math.floor(r()*GAMES.length)],win=r()<p.mW/p.mG;
+    return{k:'Match',t:g[2],r:win?'WIN':'LOSS',s:Math.round(REF[g[1]]*(.6+r()*.8)),d:Date.now()-Math.round((i*.9+.2+r()*.7)*864e5)};});
+}
+
+V.friends=()=>{
+  resolveSent();
+  const rows=FT==='list'
+   ?(S.friends.length?S.friends.map(id=>pRow(id)).join(''):'<p class="note">No friends yet. Open FIND to search for players and send requests.</p>')
+   :FT==='req'
+   ?`<div class="lbl" style="margin:6px 0">INCOMING</div>${S.reqs.map(id=>actRow(id,'ACCEPT','facc').replace('</div>','<button class="chip" data-act="fdec" data-v="'+id+'">✕</button></div>')).join('')||'<p class="note">No incoming requests.</p>'}
+     <div class="lbl" style="margin:14px 0 6px">SENT</div>${S.sent.map(x=>pRow(x.id,'<span class="tag">PENDING</span>')).join('')||'<p class="note">No pending requests. Players usually reply within a few seconds.</p>'}`
+   :`<input class="inp" id="fq" maxlength="14" autocomplete="off" placeholder="SEARCH NAME" value="${esc(FQ)}" style="font-size:24px;letter-spacing:.1em"><div id="fres">${findHtml()}</div>`;
+  return `<div class="top"><div class="logo">APEX<span>BRAIN</span></div></div>
+  <div class="banner">${emb()}<div><h1>FRIENDS</h1><small>Simulated players · stored on this phone</small></div></div>
+  ${chipRow('ftab',FT,ftabs())}
+  ${rows}
+  <p class="note">All players here are simulated, with fixed stats. Real friends and online requests arrive in Phase 7.</p>`;
+};
+
+V.player=()=>{
+  const p=player(PID),fr=isFriend(PID),sn=isSent(PID),rq=isReq(PID),lv=lvOf(p.xp),h=S.h2h[PID]||[0,0],on=online(PID),nm=esc(p.name);
+  const act=fr?`<button class="btn" data-act="frem" data-v="${PID}">REMOVE FRIEND</button>`
+   :sn?'<button class="btn" style="opacity:.6">REQUEST PENDING</button>'
+   :rq?`<button class="btn solid" data-act="facc" data-v="${PID}">ACCEPT REQUEST</button><button class="btn" data-act="fdec" data-v="${PID}">DECLINE</button>`
+   :`<button class="btn solid" data-act="fadd" data-v="${PID}">ADD FRIEND</button>`;
+  const chal=fr
+   ?`<h2>CHALLENGE</h2><div class="lbl">PICK A GAME (1 ROUND · MEDIUM)</div>
+     <div class="g2">${GAMES.map(g=>`<button class="${CG===g[1]?'on':''}" data-act="cgame" data-v="${g[1]}">${g[2]}</button>`).join('')}</div>
+     <button class="btn solid" data-act="chal">CHALLENGE ${nm.toUpperCase()}</button>
+     <p class="note">You play for real. ${nm}'s score is simulated from their stats.</p>`
+   :`<p class="note">Add ${nm} as a friend to send a challenge.</p>`;
+  return `<div class="top"><div class="logo">PLAYER</div><button class="chip" data-go="${PBACK}">BACK</button></div>
+  <div class="hud"><div class="row">${avatar(p.name,56)}<div class="grow"><div class="name">${nm}</div><small>LEVEL ${lv} · ${rankOf(lv)}</small>
+   <div class="bar"><i style="width:${p.xp%100}%"></i></div></div><span class="tag ${on?'live':''}">${on?'ONLINE':'OFFLINE'}</span></div></div>
+  ${act}
+  <div class="stats"><div><small>GLOBAL RANK</small><b>#${grank(p.xp)}</b></div><div><small>XP THIS WEEK</small><b>${weekXp(PID)}</b></div>
+  <div><small>TOTAL XP</small><b>${p.xp}</b></div><div><small>MATCHES</small><b>${p.mG}</b></div>
+  <div><small>WINS / WIN RATE</small><b>${p.mW} / ${wr(p.mW,p.mG)}</b></div><div><small>YOU VS ${nm.toUpperCase()}</small><b>${h[0]}–${h[1]}</b></div>
+  ${GAMES.map(g=>`<div><small>BEST ${g[2].toUpperCase()}</small><b>${p.best[g[1]]}</b></div>`).join('')}</div>
+  ${chal}
+  <h2>RECENT MATCHES (SIMULATED)</h2><div class="hud">${histRows(simHist(PID))}</div>`;
+};
+
+function boardRows(){
+  const pool=NAMES.map(player).filter(p=>RS!=='friends'||isFriend(p.id));
+  pool.push(meEntry());
+  const val=p=>RS==='weekly'?(p.me?myWeek():weekXp(p.id)):RG==='all'?p.xp:(p.best[RG]||0);
+  pool.sort((a,b)=>val(b)-val(a)||b.xp-a.xp);
+  return{pool,val};
+}
+const metricName=()=>RS==='weekly'?'XP THIS WEEK':RG==='all'?'TOTAL XP':'BEST '+gname(RG).toUpperCase();
+V.ranks=()=>{
+  const {pool,val}=boardRows(),pos=pool.findIndex(p=>p.me)+1,me=pool[pos-1];
+  return `<div class="top"><div class="logo">APEX<span>BRAIN</span></div></div>
+  <div class="banner">${emb()}<div><h1>LEADERBOARDS</h1><small>Simulated players · this phone only</small></div></div>
+  ${chipRow('rscope',RS,rscopes())}
+  ${RS==='weekly'?'<p class="note">Weekly XP resets every Monday.</p>'
+   :`<select class="sel" id="rg"><option value="all"${RG==='all'?' selected':''}>Overall (total XP)</option>${GAMES.map(g=>`<option value="${g[1]}"${RG===g[1]?' selected':''}>${g[2]} (best score)</option>`).join('')}</select>`}
+  <div class="stats"><div><small>YOUR RANK</small><b>#${pos}</b></div><div><small>${metricName()}</small><b>${val(me)||'—'}</b></div></div>
+  <div class="lbl" style="margin:14px 0 8px">${metricName()} · ${pool.length} PLAYERS</div>
+  ${pool.map((p,i)=>{const lv=lvOf(p.xp),v=val(p);
+   return `<button class="item${p.me?' live':''}" ${p.me?'data-go="profile"':`data-act="popen" data-v="${p.id}"`}><span class="row" style="gap:10px;min-width:0"><b class="bebas" style="font-size:26px;width:34px">${i+1}</b><span style="min-width:0"><b>${esc(p.name)}${p.me?' (YOU)':''}</b><br><small>LV ${lv} · ${p.mW} WINS · ${wr(p.mW,p.mG)}</small></span></span><b class="bebas" style="font-size:26px">${v||'—'}</b></button>`;}).join('')}
+  ${RS==='friends'&&!S.friends.length?'<p class="note">You have no friends yet. Add some from the Friends screen to compare with them.</p>':''}
+  <p class="note">Boards compare you with simulated players that have fixed stats. Real global boards arrive in Phase 7.</p>`;
+};
+
+function startDuel(id){
+  const p=player(id),g=CG;
+  const room={code:'DUEL',players:[{id:'me',name:S.name,host:1},{id:id,name:p.name,bot:1,skill:p.skill}],rounds:1,dur:TB[g]||60,diff:1,games:[g]};
+  MATCH={room,games:[g],r:0,res:[],final:false,xp:0,duel:id};
+  ACT.mnext();
+}
+Object.assign(ACT,{
+  ftab(v){FT=v;show('friends');},
+  rscope(v){RS=v;if(v!=='online'&&RG==='week')RG='all';if(v==='online')loadBoard();show('ranks');},
+  popen(id){PBACK=(CURN==='ranks'||CURN==='friends')?CURN:'friends';PID=id;show('player');},
+  fadd(id){
+    if(isFriend(id)||isSent(id))return;
+    if(isReq(id)){ACT.facc(id);return;}
+    S.sent.push({id,ts:Date.now()});saveState();toast('Request sent to '+id);refresh();
+    setTimeout(()=>{
+      const r=resolveSent();
+      r.forEach(x=>toast(x[1]?x[0]+' accepted your request':x[0]+' declined your request'));
+      const a=(document.activeElement||{}).tagName||'';
+      if(['friends','player','ranks'].includes(CURN)&&!/INPUT|SELECT/.test(a))refresh();
+    },4100);
+  },
+  facc(id){S.reqs=S.reqs.filter(x=>x!==id);S.sent=S.sent.filter(x=>x.id!==id);if(!isFriend(id))S.friends.push(id);saveState();toast(id+' is now your friend');refresh();},
+  fdec(id){S.reqs=S.reqs.filter(x=>x!==id);saveState();refresh();},
+  frem(id){if(!confirm('Remove '+id+' from friends?'))return;S.friends=S.friends.filter(x=>x!==id);saveState();refresh();},
+  cgame(v){CG=v;refresh();},
+  chal(){startDuel(PID);},
+  duelre(){startDuel(MATCH.duel);}
+});
+document.addEventListener('input',e=>{if(e.target.id==='fq'){FQ=e.target.value;const r=$('#fres');if(r)r.innerHTML=findHtml();}});
+document.addEventListener('change',e=>{if(e.target.id==='rg'){RG=e.target.value;refresh();}});
+
+/* ===== 10g. PHASE 6: ACHIEVEMENTS, DAILY CHALLENGE, NOTIFICATIONS, SETTINGS ===== */
+const NQ=[];let NT=0;
+function notify(m){NQ.push(m);if(!NT)pump();}
+function pump(){if(!NQ.length){NT=0;return;}NT=1;toast(NQ.shift());setTimeout(pump,2000);}
+function buzz(p){try{if(S.vib!==0&&navigator.vibrate)navigator.vibrate(p);}catch(e){}}
+
+/* Daily challenge: one game per day for everyone, +25 XP the first time you play it that day */
+const dailyGame=()=>{const g=GAMES.filter(x=>x[3]);return g[hash('daily'+dayStr(new Date()))%g.length][1];};
+const dailyDone=()=>S.daily===dayStr(new Date());
+function dailyHtml(){
+  const g=dailyGame();
+  return `<div class="hud row"><div class="grow"><small>DAILY CHALLENGE · +25 XP</small><div class="name">${gname(g)}</div></div>${dailyDone()?'<span class="tag live">DONE</span>':`<button class="chip" data-act="pick" data-v="${g}">PLAY</button>`}</div>`;
+}
+
+/* Achievements: [id, name, description, target, current value, glyph]. Each unlock gives +20 XP. */
+const bs=g=>(S.best||{})[g]||0;
+const playedN=()=>new Set(Object.keys(S.plays||{}).concat(Object.keys(S.best||{}))).size;
+const ACH=[
+ ['first','FIRST STEPS','Play your first game',1,()=>S.games,'1'],
+ ['g10','WARM-UP','Play 10 games',10,()=>S.games,'10'],
+ ['g50','DEDICATED','Play 50 games',50,()=>S.games,'50'],
+ ['lv5','CHALLENGER','Reach level 5',5,()=>level(),'L5'],
+ ['lv10','ELITE','Reach level 10',10,()=>level(),'L10'],
+ ['st3','ON A ROLL','Play 3 days in a row',3,()=>S.streak,'3D'],
+ ['st7','UNSTOPPABLE','Play 7 days in a row',7,()=>S.streak,'7D'],
+ ['all','EXPLORER','Play all 12 games',12,playedN,'ALL'],
+ ['daily','DAILY GRIND','Finish 3 daily challenges',3,()=>S.dailyN||0,'D3'],
+ ['week','WEEKLY WARRIOR','Earn 300 XP in one week',300,myWeek,'WK'],
+ ['win','FIRST WIN','Win a room, squad or challenge match',1,()=>totals().w,'W'],
+ ['win5','CHAMPION','Win 5 matches',5,()=>totals().w,'W5'],
+ ['sqw','SQUAD VICTORY','Win a squad match',1,()=>(S.sq||{}).w||0,'SQ'],
+ ['mvp','MVP','Earn an MVP award in a squad match',1,()=>(S.sq||{}).mvp||0,'MVP'],
+ ['fr1','NEW FRIEND','Add a friend',1,()=>S.friends.length,'F'],
+ ['fr5','SOCIAL','Have 5 friends',5,()=>S.friends.length,'F5'],
+ ['rival','RIVAL','Win a challenge against a friend',1,()=>Object.values(S.h2h||{}).reduce((a,x)=>a+x[0],0),'VS'],
+ ['top10','TOP 10','Reach the top 10 on the global board',NAMES.length-9,()=>NAMES.length+1-grank(S.xp,1),'T10'],
+ ['math','MATH WHIZ','Score 300 or more in Blitz',300,()=>bs('blitz'),'M'],
+ ['mem','MEMORY MASTER','Score 150 or more in Number memory',150,()=>bs('nmem'),'N'],
+ ['speed','SPEED DEMON','Score 700 or more in Reaction speed',700,()=>bs('react'),'RX'],
+ ['sud','SUDOKU SOLVER','Solve a Sudoku',1,()=>bs('sudoku')?1:0,'S']];
+function checkAch(){
+  const got=[];let again=true;
+  while(again){again=false;
+    ACH.forEach(a=>{if(!S.ach[a[0]]&&a[4]()>=a[3]){S.ach[a[0]]=Date.now();S.newAch=(S.newAch||0)+1;addXp(20);got.push(a[1]);again=true;}});}
+  if(!got.length)return;
+  saveState();
+  if(got.length>2)notify(got.length+' BADGES UNLOCKED · +'+got.length*20+' XP');
+  else got.forEach(n=>notify('BADGE UNLOCKED · '+n+' · +20 XP'));
+}
+V.ach=()=>{
+  const n=ACH.filter(a=>S.ach[a[0]]).length;
+  const html=`<div class="top"><div class="logo">APEX<span>BRAIN</span></div><button class="chip" data-go="profile">PROFILE</button></div>
+  <div class="banner">${emb()}<div><h1>ACHIEVEMENTS</h1><small>${n} / ${ACH.length} unlocked · +20 XP each</small></div></div>
+  <div class="bar" style="margin:0 0 14px"><i style="width:${Math.round(n/ACH.length*100)}%"></i></div>
+  ${ACH.slice().sort((a,b)=>(!!S.ach[b[0]])-(!!S.ach[a[0]])).map(a=>{
+    const v=Math.min(a[4](),a[3]),done=!!S.ach[a[0]];
+    return `<div class="item${done?' live':''}" style="cursor:default"><span class="row" style="gap:12px;min-width:0"><span class="av bebas" style="width:48px;height:48px;font-size:20px;${done?'background:var(--w);color:var(--k)':''}">${a[5]}</span><span style="min-width:0"><b>${a[1]}</b><br><small>${a[2]}</small>${done?'':`<div class="bar" style="width:140px"><i style="width:${Math.round(v/a[3]*100)}%"></i></div>`}</span></span>${done?'<span class="tag live">UNLOCKED</span>':`<small>${v} / ${a[3]}</small>`}</div>`;}).join('')}`;
+  if(S.newAch){S.newAch=0;saveState();}
+  return html;
+};
+Object.assign(ACT,{
+  vib(){S.vib=S.vib===0?1:0;saveState();if(S.vib)buzz(30);refresh();},
+  reset(){
+    if(!confirm('Erase ALL progress, friends and history on this phone?'))return;
+    if(!confirm('This cannot be undone. Erase everything?'))return;
+    try{localStorage.removeItem(KEY);localStorage.removeItem('apex_rooms');localStorage.removeItem('apex_squads');}catch(e){}
+    location.reload();
+  }
+});
+
+/* ===== 10h. PHASE 7: ONLINE PLAY (FIREBASE REALTIME DATABASE) =====
+   DB is the only thing that talks to the network. To switch to Supabase later, re-implement the 7 methods of FB below.
+   Data layout: players/{uid}, codes/{friendCode}=uid, friends/{uid}/{friendUid}, requests/{uid}/{fromUid}, rooms/{code}. */
+const ON={state:'off',on:false,uid:null,code:'',fr:{},req:{},pl:{},room:null,rc:null,roomOff:null,offs:[],board:null,err:''};
+const FB={
+  load(){return new Promise((res,rej)=>{
+    if(window.firebase&&window.firebase.database)return res();
+    const v='10.12.2',urls=['app','auth','database'].map(n=>'https://www.gstatic.com/firebasejs/'+v+'/firebase-'+n+'-compat.js');let i=0;
+    const next=()=>{if(i>=urls.length)return res();const sc=document.createElement('script');sc.src=urls[i++];sc.onload=next;
+      sc.onerror=()=>rej(new Error('Could not load Firebase. Check your connection.'));document.head.appendChild(sc);};next();});},
+  async connect(cfg){await this.load();const app=firebase.apps.length?firebase.app():firebase.initializeApp(cfg);
+    const cred=await firebase.auth().signInAnonymously();this.db=firebase.database();return cred.user.uid;},
+  get(p){return this.db.ref(p).once('value').then(s=>s.val());},
+  set(p,v){return this.db.ref(p).set(v);},
+  update(o){return this.db.ref().update(o);},
+  remove(p){return this.db.ref(p).remove();},
+  on(p,cb){const r=this.db.ref(p),h=r.on('value',s=>cb(s.val()));return()=>r.off('value',h);},
+  top(p,child,n){return this.db.ref(p).orderByChild(child).limitToLast(n).once('value').then(s=>s.val());}
+};
+const DB=(typeof window!=='undefined'&&window.__APEXDB)||FB;
+const randCode=n=>Array.from({length:n},()=>CH[rnd(0,CH.length-1)]).join('');
+function parseCfg(t){const o={};String(t||'').replace(/([A-Za-z]+)["']?\s*:\s*["']([^"']+)["']/g,(m,k,v)=>{o[k]=v;return m;});
+  return o.apiKey&&o.projectId&&o.databaseURL?o:null;}
+function softRefresh(){
+  const a=(document.activeElement||{}).tagName||'';
+  if(['home','friends','ranks','rooms','profile','olobby','match','setup'].includes(CURN)&&!/INPUT|SELECT|TEXTAREA/.test(a))refresh();
+}
+function profileObj(){const t=totals();return{name:S.name,code:ON.code,xp:S.xp,lv:level(),games:S.games,mG:t.g,mW:t.w,best:S.best,wk:{id:S.wk.id,xp:S.wk.xp},upd:Date.now()};}
+let SYNT=0;
+function syncSoon(){if(!ON.on)return;clearTimeout(SYNT);SYNT=setTimeout(()=>{DB.set('players/'+ON.uid,profileObj()).catch(()=>{});},1500);}
+async function claimCode(){
+  for(let i=0;i<8;i++){const c=randCode(6);if(!(await DB.get('codes/'+c))){await DB.set('codes/'+c,ON.uid);return c;}}
+  throw new Error('Could not create a friend code');
+}
+function loadPl(ids){ids.forEach(id=>{if(ON.pl[id])return;ON.pl[id]={name:'Loading…'};DB.get('players/'+id).then(v=>{ON.pl[id]=v||{name:'Unknown'};softRefresh();}).catch(()=>{});});}
+async function goOnline(){
+  if(ON.state==='connecting'||ON.on)return;
+  const cfg=window.__APEXDB?{}:parseCfg(S.fbcfg);
+  if(!window.__APEXDB&&!cfg){ON.state='off';return;}
+  ON.state='connecting';ON.err='';softRefresh();
+  try{
+    ON.uid=await DB.connect(cfg);
+    const me=await DB.get('players/'+ON.uid);
+    ON.code=(me&&me.code)||await claimCode();
+    await DB.set('players/'+ON.uid,profileObj());
+    ON.offs=[DB.on('friends/'+ON.uid,v=>{ON.fr=v||{};loadPl(Object.keys(ON.fr));softRefresh();}),
+             DB.on('requests/'+ON.uid,v=>{ON.req=v||{};softRefresh();})];
+    ON.on=true;ON.state='on';notify('ONLINE · FRIEND CODE '+ON.code);
+  }catch(e){ON.on=false;ON.state='error';ON.err=String((e&&e.message)||e);}
+  softRefresh();
+}
+const rscopes=()=>[['global','GLOBAL'],['friends','FRIENDS'],['weekly','WEEKLY']].concat(ON.on?[['online','ONLINE']]:[]);
+const ftabs=()=>[['list','FRIENDS '+S.friends.length],['req','REQUESTS '+S.reqs.length],['find','FIND']].concat(ON.on?[['on','ONLINE'+(Object.keys(ON.req).length?' ('+Object.keys(ON.req).length+')':'')]]:[]);
+
+/* ---------- Setup screen ---------- */
+const RULES='{\n  "rules": {\n    ".read": "auth != null",\n    ".write": "auth != null",\n    "players": { ".indexOn": ["xp"] }\n  }\n}';
+V.setup=()=>{
+  const st=ON.on?'CONNECTED · FRIEND CODE '+ON.code:ON.state==='connecting'?'CONNECTING…':ON.state==='error'?'ERROR':'NOT CONNECTED';
+  const p='margin-top:8px;font-size:13px;line-height:1.6;user-select:text;-webkit-user-select:text';
+  return `<div class="top"><div class="logo">APEX<span>BRAIN</span></div><button class="chip" data-go="profile">PROFILE</button></div>
+  <div class="banner">${emb()}<div><h1>ONLINE PLAY</h1><small>${st}</small></div></div>
+  ${ON.state==='error'?`<div class="hud"><div class="lbl">PROBLEM</div><p style="${p}">${esc(ON.err)}</p></div>`:''}
+  <div class="hud"><div class="lbl">SET UP FIREBASE (FREE, ABOUT 5 MINUTES)</div><p style="${p}">
+  1. Go to console.firebase.google.com and add a project (turn analytics off).<br>
+  2. Build, then Authentication, Get started, Sign-in method: enable <b>Anonymous</b>.<br>
+  3. Build, then Realtime Database, Create database. Open its Rules tab, paste the rules below and Publish.<br>
+  4. Project settings (gear), Your apps, add a Web app (&lt;/&gt;). Copy the firebaseConfig block. It must include databaseURL. If it does not, copy the URL from the top of the Realtime Database page and add it.<br>
+  5. Paste the block below and tap Save.</p></div>
+  <div class="lbl">RULES TO PASTE</div>
+  <pre class="hud" style="white-space:pre-wrap;font-size:12px;line-height:1.5;user-select:text;-webkit-user-select:text">${esc(RULES)}</pre>
+  <div class="lbl">YOUR FIREBASE CONFIG</div>
+  <textarea class="inp" id="fbcfg" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family:Inter,sans-serif;font-size:12px;letter-spacing:0;text-align:left;text-transform:none;height:170px">${esc(S.fbcfg||'')}</textarea>
+  <button class="btn solid" data-act="fbsave">SAVE AND CONNECT</button>
+  <button class="btn" data-act="fbclear">DISCONNECT AND FORGET CONFIG</button>
+  <p class="note">Your online identity is stored in this browser. Clearing site data creates a new player. The rules above let any signed-in player read and write, which is fine for playing with friends but is not hardened against cheating.</p>`;
+};
+Object.assign(ACT,{
+  fbsave(){const t=($('#fbcfg')||{}).value||'';
+    if(!parseCfg(t)){toast('Config needs apiKey, projectId and databaseURL');return;}
+    S.fbcfg=t;saveState();
+    if(window.firebase&&firebase.apps&&firebase.apps.length&&typeof location!=='undefined'){location.reload();return;}
+    ON.state='off';ON.on=false;goOnline();},
+  fbclear(){S.fbcfg='';saveState();if(typeof location!=='undefined')location.reload();},
+  ocopy(){const c=ON.code;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(c).then(()=>toast('Code copied'),()=>toast('Code: '+c));else toast('Code: '+c);}
+});
+
+/* ---------- Online friends ---------- */
+function onFriendsView(){
+  const reqs=Object.keys(ON.req||{}),frs=Object.keys(ON.fr||{});
+  const row=(name,p,extra)=>{const lv=lvOf(p.xp||0);return `<div class="item"><span class="row" style="gap:12px;min-width:0">${avatar(name||'?',44)}<span><b>${esc(name||'?')}</b><br><small>LV ${lv} · ${p.mW||0} WINS · ${wr(p.mW||0,p.mG||0)}</small></span></span>${extra||''}</div>`;};
+  return `<div class="top"><div class="logo">APEX<span>BRAIN</span></div></div>
+  <div class="banner">${emb()}<div><h1>FRIENDS</h1><small>Online · real players</small></div></div>
+  ${chipRow('ftab',FT,ftabs())}
+  <div class="hud"><div class="row"><div class="grow"><small>YOUR FRIEND CODE</small><div class="big" style="font-size:40px;letter-spacing:.15em">${ON.code}</div></div><button class="chip" data-act="ocopy">COPY</button></div></div>
+  <div class="hud"><div class="lbl">ADD A FRIEND BY CODE</div><input class="inp" id="ofc" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="CODE"><button class="btn" style="margin:0" data-act="ofadd">SEND REQUEST</button></div>
+  <div class="lbl" style="margin:6px 0">REQUESTS (${reqs.length})</div>
+  ${reqs.map(id=>row(ON.req[id].name,{},`<span><button class="chip" data-act="ofacc" data-v="${id}">ACCEPT</button> <button class="chip" data-act="ofdec" data-v="${id}">✕</button></span>`)).join('')||'<p class="note">No requests.</p>'}
+  <div class="lbl" style="margin:14px 0 6px">FRIENDS (${frs.length})</div>
+  ${frs.map(id=>{const p=ON.pl[id]||{};return row(p.name,p,`<button class="chip" data-act="ofrem" data-v="${id}">REMOVE</button>`);}).join('')||'<p class="note">No online friends yet. Share your code, or enter a friend\'s code above.</p>'}`;
+}
+const vFriendsSim=V.friends;
+V.friends=()=>{if(FT==='on'&&!ON.on)FT='list';return FT==='on'?onFriendsView():vFriendsSim();};
+Object.assign(ACT,{
+  async ofadd(){
+    const c=(($('#ofc')||{}).value||'').trim().toUpperCase();
+    if(!/^[A-Z0-9]{6}$/.test(c)){toast('Enter the 6-character friend code');return;}
+    try{
+      const uid=await DB.get('codes/'+c);
+      if(!uid){toast('No player with that code');return;}
+      if(uid===ON.uid){toast('That is your own code');return;}
+      if(ON.fr[uid]){toast('Already friends');return;}
+      if(ON.req[uid]){await ACT.ofacc(uid);return;}
+      await DB.set('requests/'+uid+'/'+ON.uid,{name:S.name,ts:Date.now()});toast('Request sent');
+    }catch(e){toast('Online error. Try again.');}
+  },
+  async ofacc(id){try{await DB.update({['friends/'+ON.uid+'/'+id]:true,['friends/'+id+'/'+ON.uid]:true,['requests/'+ON.uid+'/'+id]:null});toast('Friend added');}catch(e){toast('Online error. Try again.');}},
+  async ofdec(id){try{await DB.remove('requests/'+ON.uid+'/'+id);}catch(e){}},
+  async ofrem(id){if(!confirm('Remove this friend?'))return;try{await DB.update({['friends/'+ON.uid+'/'+id]:null,['friends/'+id+'/'+ON.uid]:null});}catch(e){}}
+});
+
+/* ---------- Online leaderboard ---------- */
+function loadBoard(){
+  ON.board=null;
+  DB.top('players','xp',100).then(v=>{ON.board=v||{};softRefresh();}).catch(()=>{ON.board={};softRefresh();});
+}
+function onRanksView(){
+  const b=ON.board;
+  let rows='<p class="note">Loading…</p>';
+  if(b){
+    const val=p=>RG==='week'?(p.wk&&p.wk.id===weekId()?p.wk.xp:0):RG==='all'?(p.xp||0):((p.best||{})[RG]||0);
+    const pool=Object.keys(b).map(id=>Object.assign({uid:id},b[id])).sort((x,y)=>val(y)-val(x)||(y.xp||0)-(x.xp||0)).slice(0,50);
+    rows=pool.length?pool.map((p,i)=>`<div class="item${p.uid===ON.uid?' live':''}" style="cursor:default"><span class="row" style="gap:10px;min-width:0"><b class="bebas" style="font-size:26px;width:34px">${i+1}</b><span style="min-width:0"><b>${esc(p.name||'Player')}${p.uid===ON.uid?' (YOU)':''}</b><br><small>LV ${lvOf(p.xp||0)} · ${p.mW||0} WINS · ${wr(p.mW||0,p.mG||0)}</small></span></span><b class="bebas" style="font-size:26px">${val(p)||'—'}</b></div>`).join(''):'<p class="note">No players yet.</p>';
+  }
+  return `<div class="top"><div class="logo">APEX<span>BRAIN</span></div></div>
+  <div class="banner">${emb()}<div><h1>LEADERBOARDS</h1><small>Online · real players</small></div></div>
+  ${chipRow('rscope',RS,rscopes())}
+  <select class="sel" id="rg"><option value="all"${RG==='all'?' selected':''}>Total XP</option><option value="week"${RG==='week'?' selected':''}>XP this week</option>${GAMES.map(g=>`<option value="${g[1]}"${RG===g[1]?' selected':''}>${g[2]} (best score)</option>`).join('')}</select>
+  <button class="btn" data-act="oboard">REFRESH BOARD</button>
+  ${rows}
+  <p class="note">Shows the top 100 players by total XP. Your stats upload a moment after you finish a game.</p>`;
+}
+const vRanksSim=V.ranks;
+V.ranks=()=>{if(RS==='online'&&!ON.on)RS='global';return RS==='online'?onRanksView():vRanksSim();};
+ACT.oboard=()=>{loadBoard();refresh();};
+
+/* ---------- Online rooms ---------- */
+const rkey=i=>'r'+i;
+const roundGame=(R_,i)=>R_.games[i%R_.games.length];
+const roundScores=(R_,i)=>(R_.scores||{})[rkey(i)]||{};
+function roundDone(R_,i){const ids=Object.keys(R_.players||{}),s=roundScores(R_,i);return !!((R_.forced||{})[rkey(i)])||(ids.length>0&&ids.every(id=>s[id]!==undefined));}
+function onStand(R_,upto){
+  const ids=Object.keys(R_.players||{}),P=ids.map(id=>({id,name:R_.players[id].name,pts:0,raw:0}));
+  for(let i=0;i<=upto;i++){
+    if(!roundDone(R_,i))continue;
+    const s=roundScores(R_,i),v=id=>s[id]||0;
+    [...P].sort((a,b)=>v(b.id)-v(a.id)).forEach((p,k)=>{p.pts+=P.length-k;});
+    P.forEach(p=>{p.raw+=v(p.id);});
+  }
+  return P.sort((a,b)=>b.pts-a.pts||b.raw-a.raw);
+}
+function detach(){if(ON.roomOff){ON.roomOff();ON.roomOff=null;}ON.rc=null;ON.room=null;}
+function enterRoom(code){detach();ON.rc=code;ON.roomOff=DB.on('rooms/'+code,v=>{ON.room=v;roomEvent();});show('olobby');}
+const oup=o=>DB.update(Object.fromEntries(Object.entries(o).map(([k,v])=>['rooms/'+ON.rc+'/'+k,v]))).catch(()=>toast('Online error. Try again.'));
+const isOHost=()=>!!(ON.room&&ON.room.host===ON.uid);
+function roomEvent(){
+  const R_=ON.room;
+  if(!R_){const was=CURN;detach();MATCH=null;toast('Room closed');if(['olobby','match','play'].includes(was))show('rooms');return;}
+  if(!R_.players||!R_.players[ON.uid]){detach();MATCH=null;toast('You left the room');if(['olobby','match','play'].includes(CURN))show('rooms');return;}
+  if(R_.status==='playing'&&!MATCH&&CURN==='olobby'){startOnlineMatch();return;}
+  if(R_.status==='lobby'&&MATCH&&MATCH.online&&MATCH.final&&CURN==='match'){show('olobby');return;}
+  if(MATCH&&MATCH.online)finalizeOnline();
+  if(CURN==='olobby'||(CURN==='match'&&MATCH&&MATCH.online))softRefresh();
+}
+function startOnlineMatch(){
+  const R_=ON.room,r=R_.round||0;
+  MATCH={online:ON.rc,r,res:[],final:false,xp:0,paid:0,room:{code:ON.rc,players:[]}};
+  if(roundScores(R_,r)[ON.uid]!==undefined){MATCH.sent=r;show('match');return;}
+  G={game:roundGame(R_,r),d:R_.diff,dur:R_.dur};ACT.start();
+}
+function onlineRound(score){
+  const M=MATCH;M.sent=M.r;
+  DB.set('rooms/'+M.online+'/scores/'+rkey(M.r)+'/'+ON.uid,score).catch(()=>toast('Could not send your score'));
+  show('match');
+}
+function finalizeOnline(){
+  const M=MATCH,R_=ON.room;if(!M||M.paid||!R_)return;
+  const last=R_.rounds-1;
+  if(M.sent!==last||!roundDone(R_,last))return;
+  M.paid=1;
+  const st=onStand(R_,last),pl=st.findIndex(p=>p.id===ON.uid),win=pl===0;
+  M.final=true;M.win=win;M.xp=10+(win?30:0);
+  addXp(M.xp);S.mGames=(S.mGames||0)+1;if(win)S.mWins=(S.mWins||0)+1;
+  addHist({k:'Online',t:'Room '+M.online,r:win?'WIN':'LOSS',s:pl>=0?st[pl].raw:0,x:'#'+(pl+1)+' of '+st.length});
+  saveState();
+}
+V.olobby=()=>{
+  const R_=ON.room;
+  if(!R_)return `<div class="top"><div class="logo">ONLINE ROOM</div></div><p class="note">Connecting to the room…</p><button class="btn" data-act="oleave">BACK</button>`;
+  const host=R_.host===ON.uid,ids=Object.keys(R_.players||{}),n=ids.length,games=R_.games||[];
+  const cfg=host?`<div class="lbl">MAX PLAYERS</div>${chipRow('omax',R_.max,[[2,'2'],[3,'3'],[4,'4'],[6,'6'],[8,'8']])}
+  <div class="lbl">GAMES (ROUNDS CYCLE THROUGH YOUR PICKS)</div>
+  <div class="g2">${GAMES.map(g=>`<button class="${games.includes(g[1])?'on':''}" data-act="ogame" data-v="${g[1]}">${g[2]}</button>`).join('')}</div>
+  <div class="lbl">DIFFICULTY</div>${chipRow('odiff',R_.diff,DIFF.map((d,i)=>[i,d]))}
+  <div class="lbl">ROUND TIME (TIMED GAMES ONLY)</div>${chipRow('odur',R_.dur,[[30,'30 SEC'],[60,'60 SEC'],[90,'90 SEC']])}
+  <div class="lbl">ROUNDS</div>${chipRow('orounds',R_.rounds,[[1,'1'],[3,'3'],[5,'5']])}
+  <button class="btn solid" style="margin-top:6px" data-act="ostartm">START MATCH</button>`
+  :`<div class="hud"><div class="lbl">SETTINGS (THE HOST CHOOSES)</div><p style="margin-top:8px;font-size:14px;line-height:1.7">Games: ${games.map(g=>gname(g)).join(', ')}<br>Difficulty: ${DIFF[R_.diff]}<br>Round time: ${R_.dur} sec · Rounds: ${R_.rounds}<br>Max players: ${R_.max}</p></div><p class="note">Waiting for the host to start the match…</p>`;
+  return `<div class="top"><div class="logo">ONLINE ROOM</div><button class="chip" data-act="ocopyroom">COPY CODE</button></div>
+  <div class="banner">${emb()}<div><small>ROOM CODE</small><h1>${ON.rc}</h1></div></div>
+  <div class="hud"><div class="lbl">PLAYERS ${n} / ${R_.max}</div>
+  ${ids.map(id=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--l)"><div class="grow name">${esc(R_.players[id].name)}${id===ON.uid?' (YOU)':''}</div>${id===R_.host?'<span class="tag live">HOST</span>':''}</div>`).join('')}</div>
+  ${cfg}
+  <button class="btn" data-act="oleave">LEAVE ROOM</button>`;
+};
+function onlineMatchView(){
+  const M=MATCH,R_=ON.room;
+  if(!R_)return '<p class="note">Reconnecting…</p><button class="btn" data-act="oleave">LEAVE ROOM</button>';
+  const r=M.r,done=roundDone(R_,r),ids=Object.keys(R_.players||{}),s=roundScores(R_,r),host=R_.host===ON.uid,fin=M.final;
+  const st=onStand(R_,r),nm=id=>id===ON.uid?'You':((R_.players[id]||{}).name||'Player');
+  const head=fin?`<div class="banner">${emb()}<h1>${M.win?'VICTORY':'DEFEAT'}</h1></div><div class="reward">YOU GOT +${M.xp} XP THIS MATCH!</div>`
+   :`<div class="banner">${emb()}<div><h1>${done?'ROUND '+(r+1)+' DONE':'WAITING…'}</h1><small>Room ${M.online} · round ${r+1} of ${R_.rounds}</small></div></div>`;
+  const prog=done?'':`<div class="hud"><div class="lbl">ROUND ${r+1} PROGRESS (${Object.keys(s).length} / ${ids.length})</div>${ids.map(id=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--l)"><span class="grow name">${esc(nm(id))}</span><span class="tag ${s[id]!==undefined?'live':''}">${s[id]!==undefined?'DONE':'PLAYING'}</span></div>`).join('')}</div>`;
+  const table=st.some(p=>p.pts)?`<div class="hud"><div class="lbl">STANDINGS (PLACEMENT POINTS / TOTAL SCORE)</div>${st.map((p,i)=>`<div class="row" style="padding:9px 0;border-bottom:1px solid var(--l)"><b style="width:22px">${i+1}</b><span class="grow name">${esc(nm(p.id))}</span><b>${p.pts} PTS</b><small style="width:64px;text-align:right">${p.raw}</small></div>`).join('')}</div>`:'';
+  const rr=[];for(let i=0;i<=r;i++){if(!roundDone(R_,i))continue;const sc=roundScores(R_,i);
+    rr.push(`<li><b>R${i+1} ${gname(roundGame(R_,i))}</b><br><small>${ids.slice().sort((a,b)=>(sc[b]||0)-(sc[a]||0)).map(id=>nm(id)+' '+(sc[id]||0)).join(' · ')}</small></li>`);}
+  const results=rr.length?`<div class="hud"><div class="lbl">ROUND RESULTS</div><ul class="pl">${rr.join('')}</ul></div>`:'';
+  let btn='';
+  if(fin)btn=(host?'<button class="btn solid" data-act="oagain">PLAY AGAIN (BACK TO LOBBY)</button>':'<p class="note">The host can start a rematch.</p>')+'<button class="btn" data-act="oleave">LEAVE ROOM</button>';
+  else if(!done)btn=host?'<button class="btn" data-act="oforce">CONTINUE WITHOUT MISSING PLAYERS</button>':'<p class="note">Waiting for the other players to finish…</p>';
+  else if(r+1<R_.rounds){
+    const g=gname(roundGame(R_,r+1)).toUpperCase();
+    btn=(R_.round||0)>r?`<button class="btn solid" data-act="onext">START ROUND ${r+2}: ${g}</button>`
+      :host?`<button class="btn solid" data-act="onext">NEXT ROUND: ${g}</button>`:'<p class="note">Waiting for the host to continue…</p>';
+  }
+  return head+prog+table+results+`<p class="note">Everyone plays the same game each round. Scores are real and come from the other phones.</p>`+btn;
+}
+const vMatchPrev=V.match;
+V.match=()=>MATCH.online?onlineMatchView():vMatchPrev();
+Object.assign(ACT,{
+  async ocreate(){
+    if(!ON.on){toast('Go online first');return;}
+    try{
+      let code;for(let i=0;i<8;i++){code=randCode(5);if(!(await DB.get('rooms/'+code)))break;}
+      await DB.set('rooms/'+code,{host:ON.uid,max:4,games:['blitz'],diff:1,dur:60,rounds:3,status:'lobby',round:0,created:Date.now(),players:{[ON.uid]:{name:S.name,j:Date.now()}}});
+      enterRoom(code);
+    }catch(e){toast('Could not create the room');}
+  },
+  async ojoin(){
+    if(!ON.on){toast('Go online first');return;}
+    const c=(($('#ojc')||{}).value||'').trim().toUpperCase();
+    if(!/^[A-Z0-9]{5}$/.test(c)){toast('Enter the 5-character code');return;}
+    try{
+      const R_=await DB.get('rooms/'+c);
+      if(!R_){toast('No online room with that code');return;}
+      const mine=!!(R_.players&&R_.players[ON.uid]);
+      if(!mine&&R_.status!=='lobby'){toast('That match has already started');return;}
+      if(!mine&&Object.keys(R_.players||{}).length>=R_.max){toast('That room is full');return;}
+      if(!mine)await DB.set('rooms/'+c+'/players/'+ON.uid,{name:S.name,j:Date.now()});
+      enterRoom(c);
+    }catch(e){toast('Could not join the room');}
+  },
+  ocopyroom(){const c=ON.rc;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(c).then(()=>toast('Code copied'),()=>toast('Code: '+c));else toast('Code: '+c);},
+  omax(v){if(isOHost())oup({max:Math.max(+v,Object.keys(ON.room.players||{}).length)});},
+  ogame(g){if(!isOHost())return;const a=(ON.room.games||[]).slice(),i=a.indexOf(g);
+    if(i>=0){if(a.length===1){toast('Pick at least one game');return;}a.splice(i,1);}else a.push(g);oup({games:a});},
+  odiff(v){if(isOHost())oup({diff:+v});},
+  odur(v){if(isOHost())oup({dur:+v});},
+  orounds(v){if(isOHost())oup({rounds:+v});},
+  ostartm(){if(!isOHost())return;if(Object.keys(ON.room.players||{}).length<2){toast('You need at least 2 players');return;}
+    oup({status:'playing',round:0,scores:null,forced:null});},
+  async onext(){
+    const M=MATCH,R_=ON.room;if(!M||!M.online||!R_)return;const r=M.r;
+    if((R_.round||0)<=r){if(R_.host!==ON.uid)return;
+      try{await DB.update({['rooms/'+ON.rc+'/round']:r+1});}catch(e){toast('Online error. Try again.');return;}}
+    M.r=r+1;G={game:roundGame(ON.room||R_,M.r),d:R_.diff,dur:R_.dur};ACT.start();
+  },
+  oforce(){if(isOHost()&&MATCH&&MATCH.online)oup({['forced/'+rkey(MATCH.r)]:true});},
+  oagain(){if(isOHost())oup({status:'lobby',round:0,scores:null,forced:null});},
+  async oleave(){
+    const c=ON.rc,R_=ON.room;detach();MATCH=null;
+    try{
+      if(c&&R_){
+        const ids=Object.keys(R_.players||{});
+        if(R_.host===ON.uid&&ids.length<=1)await DB.remove('rooms/'+c);
+        else if(R_.host===ON.uid)await DB.update({['rooms/'+c+'/host']:ids.find(id=>id!==ON.uid),['rooms/'+c+'/players/'+ON.uid]:null});
+        else await DB.remove('rooms/'+c+'/players/'+ON.uid);
+      }
+    }catch(e){}
+    show('rooms');
+  }
+});
+function onRoomsBlock(){
+  if(!ON.on)return `<div class="hud"><div class="lbl">ONLINE ROOMS</div><p class="note" style="margin:8px 0">${ON.state==='connecting'?'Connecting…':ON.state==='error'?'Online error: '+esc(ON.err):'Play with real people on other phones, with real scores.'}</p><button class="btn" style="margin:0" data-go="setup">${ON.state==='off'?'SET UP ONLINE PLAY':'ONLINE SETTINGS'}</button></div><h2>OFFLINE ROOMS (BOTS)</h2>`;
+  return `<button class="btn solid" data-act="ocreate">CREATE ONLINE ROOM</button>
+  <div class="hud"><div class="lbl">JOIN AN ONLINE ROOM</div><input class="inp" id="ojc" maxlength="5" autocomplete="off" autocapitalize="characters" placeholder="CODE"><button class="btn" style="margin:0" data-act="ojoin">JOIN ONLINE ROOM</button></div>
+  <h2>OFFLINE ROOMS (BOTS)</h2>`;
+}
+
+/* ===== 11. START ===== */
+updateStreak();
+resolveSent();
+if(!S.seeded){S.reqs=['Nova','Echo'];S.seeded=1;saveState();}
+show('home');
+goOnline();
+</script>
+</
